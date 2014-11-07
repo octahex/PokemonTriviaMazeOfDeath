@@ -1,0 +1,46 @@
+3. System Features
+3.1 Navigate Maze
+3.1.1 Description and Priority
+A Player may use the GUI to attempt to move into a room. If the door has not been unlocked they will need to answer a trivia question to progress into the next room. If a previous attempt has failed that door is locked.
+3.1.2 Stimulus/Response Sequences
+Stimulus: Player attempts to move into room through a locked door
+Response: That door's trivia question is presented
+Stimulus: Player attempts to move through already unlocked door
+Response: Player's location is moved into the unlocked room.
+Stimulus: Player attempts to move through a permanently locked door
+Response: Player is informed that the door is impassable
+3.1.3 Functional Requirements
+TBD
+
+3.2 Answer Questions
+3.2.1 Description and Priority
+The GUI will display one of several types of questions from the database. A user may select and submit an answer. Whether or not their answer is correct determines the change to the door state.
+3.2.2 Stimulus/Response Sequences
+Stimulus: Player action requests a question
+Response: Interface presents a question formatted appropriately for its type
+Stimulus: Player selects / enters an answer and submits
+Response: Interface displays whether or not the player was correct
+3.2.3 Functional Requirements
+TBD
+
+3.3 Save / Load
+3.3.1 Description and Priority
+During play, Player is allowed to save their progress and quit the game. This saves their location, score, and door status. This save can later be loaded to continue from where the player left off.
+3.3.2 Stimulus/Response Sequences
+Stimulus: Player presses the save button during an active game
+Response: Requisite game state is saved to game folder for future use
+Stimulus: Player requests to load a previously saved game
+Response: Previous game state is adopted onto the current board
+Stimulus: Player attempts to load a game when no previous game exists
+Response: Player is informed that no save file exists
+3.3.3 Functional Requirements
+TBD
+
+3.4 View High Score
+3.4.1 Description and Priority
+A player will be able to access a display through the GUI displaying all previous high scores entered into the table.
+3.4.2 Stimulus/Response Sequences
+Stimulus: Player requests high score page on interface
+Response: Top high scores from table are presented in descending order
+Stimulus: Player exits high score page
+Response: Returns to previous page of interface
