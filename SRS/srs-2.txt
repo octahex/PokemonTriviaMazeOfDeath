@@ -1,0 +1,22 @@
+2 Overall Description
+2.1 Product Perspective
+
+The Trivia Maze is a new product which will present several questions to a player. Correctly answering these questions will allow the player to move ahead towards an end goal. There will be a GUI showing the layout of the maze as well as more directly presenting questions. The player will accrue a score and at the end of the maze will be added to a high score table if appropriate. 
+
+2.2 Product Features
+
+The Trivia Maze will feature a graphical interface that reflects the user's currect location within the maze. The user will be able to manipulate this location, and by moving from room to room be presented with a trivia question. This trivia question will be one of either true/false, multiple choice, or short answer, with more types of questions potentially being added. The user will be able to save their progress within the maze, and at a later time load their progress. Further, a high score table will be kept comparing a user's final score versus that of other entrants.
+
+2.3 User Classes and Characteristics
+
+Player : A Player is the sole user case for the Trivia Maze, who will be playing the maze for their own amusement. They will do this off a local machine with the Trivia Maze installed. They will be able to play through the maze, save and load games, and view the high score list.
+
+2.4 Operating Environment
+
+OE: The Trivia Maze will operate with Java version 7.0 and SQLite version 3.8, on both the Linux and Windows 7/8 platforms.
+
+2.5 Design and Implementation Constraints
+
+CO-1: The code standards shall conform to those established by team AYIC.
+CO-2: The database backend will be made using the standard SQLite release.
+CO-3: The Trivia Maze will be made in Java, using Java's Swing for the GUI.
