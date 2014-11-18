@@ -13,7 +13,7 @@ public class RoomDemo extends JFrame
 
 	private void initialize()
 	{
-		setTitle("Current room");
+		setTitle("Current room Demo");
 
 		add(new RoomPanel());
 
