@@ -9,6 +9,7 @@ public class TriviaMaze {
 		int curx = 0, cury=0;
 		
 		String inp;
+
 		while(!gameover)	// This game loop is really rushed, sorry. No good is here.
 		{
 			System.out.println("WHERE MOVE, CREATURE?");

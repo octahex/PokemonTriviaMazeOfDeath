@@ -4,7 +4,7 @@ import cscd350.ayic.triviamaze.Cell.RoomState;
 
 public class Maze {
 	private static final int MAZESIZE = 8;
-	private Room[][] maze= new Room[MAZESIZE][MAZESIZE];
+	private Cell[][] maze= new Cell[MAZESIZE][MAZESIZE];
 	public Maze()
 	{
 		generateMaze();
@@ -15,7 +15,7 @@ public class Maze {
 		{
 			for(int y = 0; y < MAZESIZE; y++)
 			{
-				maze[x][y] = new Room(new ShortAnswer("The answer is 'Yes'", "yes"));
+				maze[x][y] = new Room(x, y, new ShortAnswer( "The answer is 'Yes'", "yes"));
 			}
 		}
 	}
