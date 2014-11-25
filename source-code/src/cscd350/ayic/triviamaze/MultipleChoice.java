@@ -8,4 +8,8 @@ public class MultipleChoice extends Question {
 		setAnswer(_answer);
 		this.answerList = answerList;
 	}
+	public String[] getAnswerList()
+	{
+		return answerList;
+	}
 }

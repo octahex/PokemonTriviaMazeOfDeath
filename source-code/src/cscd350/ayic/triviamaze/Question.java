@@ -3,10 +3,6 @@ package cscd350.ayic.triviamaze;
 public abstract class Question {
 	private String questionText;
 	private String answer;
-	public String getQuestion()
-	{
-		return questionText;
-	}
 	public String getAnswer()
 	{
 		return this.answer;
