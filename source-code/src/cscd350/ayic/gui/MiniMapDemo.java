@@ -3,21 +3,23 @@ package cscd350.ayic.gui;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class RoomDemo extends JFrame
+import cscd350.ayic.triviamaze.Maze;
+
+public class MiniMapDemo extends JFrame
 {
-	public RoomDemo()
+	public MiniMapDemo()
 	{
 		initialize();
 	}
 
 	private void initialize()
 	{
-		setTitle("Current room Demo");
-
-		add(new RoomPanel());
+		setTitle("Mini Map Demo");
+		
+		add(new MiniMapPanel(new Maze(), 8));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(320, 355);
+		setSize(403, 437);
 		setLocationRelativeTo(null);
 	}
 
@@ -30,7 +32,7 @@ public class RoomDemo extends JFrame
 			public void run()
 			{
 
-				RoomDemo rd = new RoomDemo();
+				MiniMapDemo rd = new MiniMapDemo();
 				rd.setVisible(true);
 			}
 		});

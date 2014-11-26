@@ -4,21 +4,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class RoomPanel extends JPanel implements MouseListener
+public class RoomPanel extends JPanel
 {
 	private BufferedImage _brickImage;
 	private BufferedImage _lockImage;
@@ -45,15 +40,14 @@ public class RoomPanel extends JPanel implements MouseListener
 	private TexturePaint _closedTexture;
 	private TexturePaint _grassTexture;
 	
-	private BufferedImage _characterImage;
-	private TexturePaint _characterTexture;
-	private Rectangle _rect;
+	private RoomMouseListener _mouseListener;
 	
 	public RoomPanel()
 	{
-		_rect = new Rectangle(128, 128, 64, 64);
 		loadImages();
-		addMouseListener(this);
+		loadTextures();
+		_mouseListener = new RoomMouseListener(this);
+		addMouseListener(_mouseListener);
 	}
 
 	private void loadImages()
@@ -72,8 +66,6 @@ public class RoomPanel extends JPanel implements MouseListener
 			_exitRightImage = ImageIO.read(new File("textures/exit-east.png"));
 			_closedImage = ImageIO.read(new File("textures/closed.png"));
 			_grassImage = ImageIO.read(new File("textures/grass.png"));
-			
-			_characterImage = ImageIO.read(new File("textures/character.gif"));
 		}
 		catch(IOException ex)
 		{
@@ -81,10 +73,8 @@ public class RoomPanel extends JPanel implements MouseListener
 		}
 	}
 	
-	private void doDrawing(Graphics g)
+	private void loadTextures()
 	{
-		Graphics2D g2d = (Graphics2D) g;
-
 		_brickTexture = new TexturePaint(_brickImage, new Rectangle(0, 0, 64, 64));
 		_lockTexture = new TexturePaint(_lockImage, new Rectangle(0, 0, 64, 64));
 		_arrowUpTexture = new TexturePaint(_arrowUpImage, new Rectangle(0, 0, 64, 64));
@@ -97,8 +87,11 @@ public class RoomPanel extends JPanel implements MouseListener
 		_exitRightTexture = new TexturePaint(_exitRightImage, new Rectangle(0, 0, 64, 64));
 		_closedTexture = new TexturePaint(_closedImage, new Rectangle(0, 0, 64, 64));
 		_grassTexture = new TexturePaint(_grassImage, new Rectangle(0, 0, 64, 64));
-		
-		_characterTexture = new TexturePaint(_characterImage, _rect);
+	}
+	
+	private void doDrawing(Graphics g)
+	{
+		Graphics2D g2d = (Graphics2D) g;
 		
 		g2d.setPaint(_brickTexture);
 		g2d.fillRect(0, 0, 64, 64);
@@ -155,9 +148,6 @@ public class RoomPanel extends JPanel implements MouseListener
 
 		g2d.setPaint(_lockTexture);
 		g2d.fillRect(256, 128, 64, 64);
-		
-		g2d.setPaint(_characterTexture);
-		g2d.fill(_rect);
 	}
 	
 	@Override
@@ -165,41 +155,5 @@ public class RoomPanel extends JPanel implements MouseListener
 	{
 		super.paintComponent(g);
 		doDrawing(g);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0)
-	{
-		System.out.println("ENOUGH WITH THE CLICKING!");
-		_rect.setLocation(_rect.x+64, _rect.y);
-		this.repaint();
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0)
-	{
-		// TODO Auto-generated method stub
-		
 	}
 }
