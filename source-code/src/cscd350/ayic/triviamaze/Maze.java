@@ -15,13 +15,13 @@ public class Maze {
 		{
 			for(int y = 0; y < MAZESIZE; y++)
 			{
-				maze[x][y] = new Room(x, y, new ShortAnswer( "The answer is 'Yes'", "yes"));
+				maze[y][x] = new Room(x, y, new ShortAnswer( "The answer is 'Yes'", "yes"));
 			}
 		}
 	}
 	public Cell getCell(int x, int y) //TODO: Error checking
 	{
-		return maze[x][y];
+		return maze[y][x];
 	}
 	public RoomState checkCell(int x, int y)
 	{
