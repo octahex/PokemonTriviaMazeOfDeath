@@ -4,11 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.TexturePaint;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import cscd350.ayic.triviamaze.Cell.RoomState;
+import cscd350.ayic.triviamaze.LocationTracker;
 import cscd350.ayic.triviamaze.Maze;
 
 public class MiniMapPanel extends JPanel
@@ -16,16 +22,31 @@ public class MiniMapPanel extends JPanel
 	private Color _borderColor;
 	private Color _lockedRoomColor;
 	private Color _unlockedRoomColor;
-	private Maze _maze;	
+	private BufferedImage _hereImage;
+	private TexturePaint _hereTexture;
+	private Maze _maze;
+	private LocationTracker _tracker;
 	private int _size;
 	
-	public MiniMapPanel(Maze maze, int size)
+	public MiniMapPanel(Maze maze, LocationTracker tracker, int size)
 	{
 		_maze = maze;
+		_tracker = tracker;
 		_size = size;
 		_borderColor = Color.white;
 		_lockedRoomColor = Color.gray;
 		_unlockedRoomColor = Color.green;
+		
+		try
+		{
+			_hereImage = ImageIO.read(new File("textures/here.png"));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		_hereTexture = new TexturePaint(_hereImage, new Rectangle(0, 0, 50, 50));
 	}
 	
 	private void doDrawing(Graphics g)
@@ -46,6 +67,9 @@ public class MiniMapPanel extends JPanel
 				g2d.setColor(_borderColor);
 				g2d.draw(rect);
 			}
+		
+		g2d.setPaint(_hereTexture);
+		g2d.fillRect(50*_tracker.getX(), 50*_tracker.getY(), 50, 50);
 	}
 	
 	@Override

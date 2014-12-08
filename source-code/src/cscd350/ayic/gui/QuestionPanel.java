@@ -4,17 +4,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import cscd350.ayic.triviamaze.Maze;
+import cscd350.ayic.triviamaze.Room;
 import net.miginfocom.swing.MigLayout;
-import sun.awt.geom.AreaOp.AddOp;
 
 public class QuestionPanel extends JPanel
 {
+	private Maze _maze;
+	private Room _room;
 	private JLabel _question;
 	private JRadioButton _choiceA;
 	private JRadioButton _choiceB;
 	
-	public QuestionPanel()
+	public QuestionPanel(Maze maze)
 	{
+		_maze = maze;
 		_question = new JLabel("This is fun.");
 		_choiceA = new JRadioButton("True");
 		_choiceB = new JRadioButton("False");
@@ -24,5 +28,16 @@ public class QuestionPanel extends JPanel
 		add(_question, "wrap");
 		add(_choiceA);
 		add(_choiceB);
+	}
+	
+	public void setRoom(Room room)
+	{
+		_room = room;
+		updateQuestion();
+	}
+
+	private void updateQuestion()
+	{
+		_question.setText(_room.getQuestion().getQuestionText());
 	}
 }

@@ -3,7 +3,7 @@ package cscd350.ayic.triviamaze;
 import cscd350.ayic.triviamaze.Cell.RoomState;
 
 public class Maze {
-	private static final int MAZESIZE = 8;
+	public static final int MAZESIZE = 8;
 	private Cell[][] maze= new Cell[MAZESIZE][MAZESIZE];
 	public Maze()
 	{
@@ -21,15 +21,21 @@ public class Maze {
 	}
 	public Cell getCell(int x, int y) //TODO: Error checking
 	{
+		if(!inBounds(x, y))
+			return null;
+		
 		return maze[y][x];
 	}
 	public RoomState checkCell(int x, int y)
 	{
-		if( (x > 0 && x < MAZESIZE) && (y > 0 && y < MAZESIZE))	//Bounds check
-		{
+		if( inBounds(x, y))
 			return getCell(x, y).getState();
-		}
 		else
 			return RoomState.SEALED;
+	}
+	
+	public boolean inBounds(int x, int y)
+	{
+		return  (x >= 0 && x < MAZESIZE) && (y >= 0 && y < MAZESIZE);
 	}
 }

@@ -1,9 +1,32 @@
 package cscd350.ayic.triviamaze;
 
 import java.util.Scanner;
+
+import javax.swing.SwingUtilities;
+
+import cscd350.ayic.gui.GameWindow;
+import cscd350.ayic.triviamaze.Cell.RoomState;
 public class TriviaMaze {
-	private static Scanner kb = new Scanner(System.in);
-	public static void main(String[] args) {
+	
+	public static void main(String[] args)
+	{
+		SwingUtilities.invokeLater(new Runnable()
+		{
+
+			@Override
+			public void run()
+			{
+				Maze maze = new Maze();
+				maze.getCell(0, 0).setState(RoomState.UNLOCKED);
+				LocationTracker tracker = new LocationTracker(maze, 0, 0);
+				GameWindow game = new GameWindow(maze, tracker);
+				game.setVisible(true);
+			}
+		});
+	}
+	
+	/*public static void main(String[] args) 
+	{
 		Maze maze = new Maze();
 		boolean gameover = false;
 		int curx = 0, cury=0;
@@ -47,5 +70,5 @@ public class TriviaMaze {
 		boolean correct = question.verifyAnswer(inp);
 		System.out.println(correct);
 		return correct;
-	}
+	}*/
 }
