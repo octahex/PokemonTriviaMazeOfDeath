@@ -203,6 +203,16 @@ public class dataBase
 	}
 	
 	
+	public void delete(int id) throws SQLException
+	{
+		this.stmt = this.conn.createStatement();
+	    String sql = "DELETE from COMPANY where ID="+id+";";
+	    this.stmt.executeUpdate(sql);
+
+	    this.stmt.close();
+	}
+	
+	
 	public String retriveQ(int id) throws SQLException
 	{
 		String type;
@@ -227,6 +237,41 @@ public class dataBase
 		
 		return q;
 	}
+	
+	
+	public String retriveType(int id) throws SQLException
+	{
+		String type;
+		
+		this.stmt = this.conn.createStatement();
+		this.rs = this.stmt.executeQuery("SELECT * FROM QUESTIONS;");
+		
+		while(rs.getInt("Question_ID") != id)
+		{
+			rs.next();
+		}
+		type = rs.getString("Type");
+		
+		return type;
+	}
+	
+	
+	public int retriveAID(int id) throws SQLException
+	{
+		int aID;
+		
+		this.stmt = this.conn.createStatement();
+		this.rs = this.stmt.executeQuery("SELECT * FROM QUESTIONS;");
+		
+		while(rs.getInt("Question_ID") != id)
+		{
+			rs.next();
+		}
+		aID = rs.getInt("Answer_ID");
+		
+		return aID;
+	}
+	
 	
 	public String retriveA(int id) throws SQLException
 	{
