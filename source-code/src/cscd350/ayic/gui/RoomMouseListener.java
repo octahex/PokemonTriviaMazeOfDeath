@@ -8,11 +8,9 @@ import cscd350.ayic.triviamaze.LocationTracker;
 public class RoomMouseListener implements MouseListener
 {
 	protected LocationTracker _tracker;
-	protected QuestionPanel _questionPanel;
-	public RoomMouseListener(LocationTracker tracker, QuestionPanel questionPanel)
+	public RoomMouseListener(LocationTracker tracker)
 	{
 		_tracker = tracker;
-		_questionPanel = questionPanel;
 	}
 
 	@Override
@@ -22,13 +20,13 @@ public class RoomMouseListener implements MouseListener
 		int y = arg0.getY()/64;
 		
 		if((x==0||x==1)&&y==2)
-			_tracker.moveWest(_questionPanel);
+			_tracker.moveWest();
 		if((x==3||x==4)&&y==2)
-			_tracker.moveEast(_questionPanel);
+			_tracker.moveEast();
 		if((y==0||y==1)&&x==2)
-			_tracker.moveNorth(_questionPanel);
+			_tracker.moveNorth();
 		if((y==3||y==4)&&x==2)
-			_tracker.moveSouth(_questionPanel);
+			_tracker.moveSouth();
 	}
 
 	@Override

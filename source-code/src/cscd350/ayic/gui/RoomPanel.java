@@ -19,6 +19,7 @@ import cscd350.ayic.triviamaze.Cell.RoomState;
 
 public class RoomPanel extends JPanel
 {
+	public static RoomPanel instance = null;
 	private BufferedImage _brickImage;
 	private BufferedImage _lockImage;
 	private BufferedImage _arrowUpImage;
@@ -49,7 +50,17 @@ public class RoomPanel extends JPanel
 	private Maze _maze;
 	private LocationTracker _tracker;
 	
-	public RoomPanel(Maze maze, LocationTracker tracker, RoomMouseListener mouseListener)
+	public static void initialize(Maze maze, LocationTracker tracker, RoomMouseListener mouseListener)
+	{
+		instance = new RoomPanel(maze, tracker, mouseListener);
+	}
+	
+	public static RoomPanel getInstance()
+	{
+		return instance;
+	}
+	
+	protected RoomPanel(Maze maze, LocationTracker tracker, RoomMouseListener mouseListener)
 	{
 		_maze = maze;
 		_tracker = tracker;

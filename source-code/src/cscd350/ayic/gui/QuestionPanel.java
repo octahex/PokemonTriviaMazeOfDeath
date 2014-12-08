@@ -10,13 +10,24 @@ import net.miginfocom.swing.MigLayout;
 
 public class QuestionPanel extends JPanel
 {
+	public static QuestionPanel instance = null;
 	private Maze _maze;
 	private Room _room;
 	private JLabel _question;
 	private JRadioButton _choiceA;
 	private JRadioButton _choiceB;
 	
-	public QuestionPanel(Maze maze)
+	public static void initialize(Maze maze)
+	{
+		instance = new QuestionPanel(maze);
+	}
+	
+	public static QuestionPanel getInstance()
+	{
+		return instance;
+	}
+	
+	private QuestionPanel(Maze maze)
 	{
 		_maze = maze;
 		_question = new JLabel("This is fun.");

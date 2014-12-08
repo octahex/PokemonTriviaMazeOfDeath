@@ -19,6 +19,7 @@ import cscd350.ayic.triviamaze.Maze;
 
 public class MiniMapPanel extends JPanel
 {
+	public static MiniMapPanel instance = null;
 	private Color _borderColor;
 	private Color _lockedRoomColor;
 	private Color _unlockedRoomColor;
@@ -28,11 +29,21 @@ public class MiniMapPanel extends JPanel
 	private LocationTracker _tracker;
 	private int _size;
 	
-	public MiniMapPanel(Maze maze, LocationTracker tracker, int size)
+	public static void initialize(Maze maze, LocationTracker tracker)
+	{
+		instance = new MiniMapPanel(maze, tracker);
+	}
+	
+	public static MiniMapPanel getInstance()
+	{
+		return instance;
+	}
+	
+	private MiniMapPanel(Maze maze, LocationTracker tracker)
 	{
 		_maze = maze;
 		_tracker = tracker;
-		_size = size;
+		_size = Maze.MAZESIZE;
 		_borderColor = Color.white;
 		_lockedRoomColor = Color.gray;
 		_unlockedRoomColor = Color.green;

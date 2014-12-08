@@ -2,7 +2,9 @@ package cscd350.ayic.triviamaze;
 
 import java.awt.Point;
 
+import cscd350.ayic.gui.MiniMapPanel;
 import cscd350.ayic.gui.QuestionPanel;
+import cscd350.ayic.gui.RoomPanel;
 import cscd350.ayic.triviamaze.Cell.RoomState;
 
 public class LocationTracker
@@ -33,36 +35,37 @@ public class LocationTracker
 		_currentLocation.setLocation(x, y);
 	}
 
-	public void moveWest(QuestionPanel questionPanel)
+	public void moveWest()
 	{
-		move(getX()-1, getY(), questionPanel);
+		move(getX()-1, getY());
 	}
 
-	public void moveEast(QuestionPanel questionPanel)
+	public void moveEast()
 	{
-		move(getX()+1, getY(), questionPanel);
+		move(getX()+1, getY());
 	}
 
-	public void moveNorth(QuestionPanel questionPanel)
+	public void moveNorth()
 	{
-		move(getX(), getY()-1, questionPanel);
+		move(getX(), getY()-1);
 	}
 
-	public void moveSouth(QuestionPanel questionPanel)
+	public void moveSouth()
 	{
-		move(getX(), getY()+1, questionPanel);
+		move(getX(), getY()+1);
 	}
 	
-	private void move(int x, int y, QuestionPanel questionPanel)
+	private void move(int x, int y)
 	{
 		if(_maze.checkCell(x, y)==RoomState.SEALED)
 			return;
 		if(_maze.checkCell(x, y)==RoomState.UNLOCKED)
 		{
 			_currentLocation.setLocation(x, y);
+			MiniMapPanel.getInstance().repaint();
+			RoomPanel.getInstance().repaint();
 		}
 		Room room = (Room) _maze.getCell(x, y);
-		questionPanel.setRoom(room);
-		System.out.println(room.getQuestion().getQuestionText());
+		QuestionPanel.getInstance().setRoom(room);
 	}
 }
