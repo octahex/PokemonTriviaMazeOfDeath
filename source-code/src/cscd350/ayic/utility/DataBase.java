@@ -53,7 +53,7 @@ public class DataBase
 		createTable("Answer");
 		createTable("HS");
 		createTable("Save");
-		fillQuestion();
+		// fillQuestion();
 		fillAnswer();
 	}
 
@@ -69,54 +69,59 @@ public class DataBase
 			e.printStackTrace();
 		}
 
-		if (s.compareTo("Question") == 0)
-		{
-			sql = "CREATE TABLE QUESTIONS "
-					+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
-					+ "Answer_ID		INT 				NOT NULL, "
-					+ "Type 			TEXT				NOT NULL)";
-		}
-		if (s.compareTo("MC") == 0)
-		{
-			sql = "CREATE TABLE MULTIPLECHOICE "
-					+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
-					+ "Question		TEXT 				NOT NULL)";
-		}
-		if (s.compareTo("TF") == 0)
-		{
-			sql = "CREATE TABLE TRUEFALSE "
-					+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
-					+ "Question		TEXT 				NOT NULL)";
-		}
-		if (s.compareTo("SA") == 0)
-		{
-			sql = "CREATE TABLE SHORTANSWER "
-					+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
-					+ "Question		TEXT 				NOT NULL)";
-		}
-		if (s.compareTo("Answer") == 0)
-		{
-			sql = "CREATE TABLE ANSWERS "
-					+ "(Answer_ID		INT PRIMARY KEY		NOT NULL, "
-					+ "Answer 		TEXT				NOT NULL)";
-		}
-		if (s.compareTo("HS") == 0)
-		{
-			sql = "CREATE TABLE HIGHSCORES "
-					+ "(HighScore_ID	INT PRIMARY KEY		NOT NULL, "
-					+ "HighScore		INT 				NOT NULL, "
-					+ "NAME 			TEXT				NOT NULL)";
-		}
-		if (s.compareTo("Save") == 0)
-		{
-			sql = "CREATE TABLE SAVES "
-					+ "(Save_ID		INT PRIMARY KEY		NOT NULL, "
-					+ "Address		TEXT 				NOT NULL,)";
-		}
-
 		try
 		{
-			this.stmt.executeUpdate(sql);
+			if (s.compareTo("Question") == 0)
+			{
+				sql = "CREATE TABLE QUESTIONS "
+						+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
+						+ "Answer_ID		INT 				NOT NULL, "
+						+ "Type 			TEXT				NOT NULL);";
+				this.stmt.executeUpdate(sql);
+			}
+			if (s.compareTo("MC") == 0)
+			{
+				sql = "CREATE TABLE MULTIPLECHOICE "
+						+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
+						+ "Question		TEXT 				NOT NULL);";
+				this.stmt.executeUpdate(sql);
+			}
+			if (s.compareTo("TF") == 0)
+			{
+				sql = "CREATE TABLE TRUEFALSE "
+						+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
+						+ "Question		TEXT 				NOT NULL);";
+				this.stmt.executeUpdate(sql);
+			}
+			if (s.compareTo("SA") == 0)
+			{
+				sql = "CREATE TABLE SHORTANSWER "
+						+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
+						+ "Question		TEXT 				NOT NULL);";
+				this.stmt.executeUpdate(sql);
+			}
+			if (s.compareTo("Answer") == 0)
+			{
+				sql = "CREATE TABLE ANSWERS "
+						+ "(Answer_ID		INT PRIMARY KEY		NOT NULL, "
+						+ "Answer 		TEXT				NOT NULL);";
+				this.stmt.executeUpdate(sql);
+			}
+			if (s.compareTo("HS") == 0)
+			{
+				sql = "CREATE TABLE HIGHSCORES "
+						+ "(HighScore_ID	INT PRIMARY KEY		NOT NULL, "
+						+ "HighScore		INT 				NOT NULL, "
+						+ "NAME 			TEXT				NOT NULL);";
+				this.stmt.executeUpdate(sql);
+			}
+			if (s.compareTo("Save") == 0)
+			{
+				sql = "CREATE TABLE SAVES "
+						+ "(Save_ID		INT PRIMARY KEY		NOT NULL, "
+						+ "Address		TEXT 				NOT NULL);";
+				this.stmt.executeUpdate(sql);
+			}
 			this.stmt.close();
 		}
 		catch (SQLException e)
@@ -233,7 +238,8 @@ public class DataBase
 		try
 		{
 			myfile = new Scanner(new File("answers.txt"));
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
 			System.out.println("Not a File");
 		}
@@ -242,6 +248,8 @@ public class DataBase
 		{
 			aID = myfile.nextInt();
 			s = myfile.nextLine();
+			while(s.equalsIgnoreCase("\n")||s.equalsIgnoreCase("")||s.equalsIgnoreCase(" "))
+				s = myfile.nextLine();
 
 			try
 			{
@@ -252,7 +260,7 @@ public class DataBase
 				e.printStackTrace();
 			}
 
-			sql = "INSERT INTO QUESTIONS (Answer_ID, Type) " + "VALUES(" + aID
+			sql = "INSERT INTO ANSWERS (Answer_ID, Answer) " + "VALUES(" + aID
 					+ ", " + s + " );";
 			try
 			{
@@ -260,6 +268,7 @@ public class DataBase
 			}
 			catch (SQLException e)
 			{
+				System.err.println(sql);
 				e.printStackTrace();
 			}
 		}
@@ -439,7 +448,6 @@ public class DataBase
 		return q;
 	}
 
-	
 	public String retrieveType(int id)
 	{
 		String type = null;
@@ -536,62 +544,17 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			this.rs = this.stmt.executeQuery("SELECT * FROM QUESTIONS;");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		try
-		{
-			while (rs.getInt("Question_ID") != id)
-			{
-				rs.next();
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			aID = rs.getInt("Answer_ID");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		try
-		{
-			this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS;");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		try
-		{
-			while (rs.getInt("Answer_ID") != aID)
-			{
-				rs.next();
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
+			/*
+			 * this.rs = this.stmt.executeQuery("SELECT * FROM QUESTIONS;");
+			 * while (rs.getInt("Question_ID") != id) { rs.next(); } aID =
+			 * rs.getInt("Answer_ID");
+			 */
+			this.rs = this.stmt
+					.executeQuery("SELECT * FROM ANSWERS WHERE Answer_ID=" + id
+							+ ";");
+			/*
+			 * while (rs.getInt("Answer_ID") != aID) { rs.next(); }
+			 */
 			a = rs.getString("Answer");
 		}
 		catch (SQLException e)

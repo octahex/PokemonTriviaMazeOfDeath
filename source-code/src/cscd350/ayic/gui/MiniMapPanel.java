@@ -23,6 +23,7 @@ public class MiniMapPanel extends JPanel
 	private Color _borderColor;
 	private Color _lockedRoomColor;
 	private Color _unlockedRoomColor;
+	private Color _sealedRoomColor;
 	private BufferedImage _hereImage;
 	private TexturePaint _hereTexture;
 	private Maze _maze;
@@ -47,6 +48,7 @@ public class MiniMapPanel extends JPanel
 		_borderColor = Color.white;
 		_lockedRoomColor = Color.gray;
 		_unlockedRoomColor = Color.green;
+		_sealedRoomColor = Color.red;
 		
 		try
 		{
@@ -72,8 +74,10 @@ public class MiniMapPanel extends JPanel
 				rect = new Rectangle2D.Double(c*50, r*50, 50, 50);
 				if(_maze.checkCell(c, r)==RoomState.UNLOCKED)
 					g2d.setColor(_unlockedRoomColor);
-				else
+				else if(_maze.checkCell(c, r)==RoomState.LOCKED)
 					g2d.setColor(_lockedRoomColor);
+				else
+					g2d.setColor(_sealedRoomColor);
 				g2d.fill(rect);
 				g2d.setColor(_borderColor);
 				g2d.draw(rect);

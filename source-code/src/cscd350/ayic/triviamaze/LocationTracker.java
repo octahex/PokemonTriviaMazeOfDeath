@@ -27,13 +27,6 @@ public class LocationTracker
 	{
 		return _currentLocation.y;
 	}
-	
-	public void moveTo(int x, int y)
-	{
-		if(x < 0 || x >= 8 || y < 0 || y >= 8)
-			return;
-		_currentLocation.setLocation(x, y);
-	}
 
 	public void moveWest()
 	{
@@ -55,17 +48,17 @@ public class LocationTracker
 		move(getX(), getY()+1);
 	}
 	
-	private void move(int x, int y)
+	public void move(int x, int y)
 	{
-		if(_maze.checkCell(x, y)==RoomState.SEALED)
-			return;
 		if(_maze.checkCell(x, y)==RoomState.UNLOCKED)
-		{
 			_currentLocation.setLocation(x, y);
-			MiniMapPanel.getInstance().repaint();
-			RoomPanel.getInstance().repaint();
+		if(_maze.checkCell(x, y)==RoomState.LOCKED)
+		{
+			Room room = (Room) _maze.getCell(x, y);
+			QuestionPanel.getInstance().setRoom(room);
 		}
-		Room room = (Room) _maze.getCell(x, y);
-		QuestionPanel.getInstance().setRoom(room);
+		
+		MiniMapPanel.getInstance().repaint();
+		RoomPanel.getInstance().repaint();
 	}
 }

@@ -1,6 +1,7 @@
 package cscd350.ayic.triviamaze;
 
 import cscd350.ayic.triviamaze.Cell.RoomState;
+import cscd350.ayic.utility.SimpleDB;
 
 public class Maze 
 {
@@ -18,7 +19,7 @@ public class Maze
 		{
 			for(int y = 0; y < MAZESIZE; y++)
 			{
-				maze[y][x] = new Room(x, y, qFactory.newQuestion());
+				maze[y][x] = new Room(x, y, qFactory.getRandomQuestion());
 			}
 		}
 	}

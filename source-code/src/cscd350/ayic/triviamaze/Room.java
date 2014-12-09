@@ -4,7 +4,7 @@ public class Room extends Cell{
 	private Question question;
 	public Room(int _x, int _y)
 	{
-		setState(RoomState.UNLOCKED);
+		setState(RoomState.LOCKED);
 		this.setY(_y);
 		//TODO: Select question on creation. Question factory?
 	}

@@ -1,14 +1,20 @@
 package cscd350.ayic.triviamaze;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
-public abstract class Question
+public class Question
 {
-	private Random _gen;
 	private QuestionBehavior _questionBehavior;
+	private int _id;
+	private String _questionText;
+	private String _correctAnswer;
+	private String[] _fakeAnswers;
 	
-	public Question(QuestionBehavior qb)
+	public Question(QuestionBehavior qb, int id)
 	{
+		_id = id;
 		setBehavior(qb);
 	}
 	
@@ -20,11 +26,49 @@ public abstract class Question
 	
 	private void init()
 	{
-		
+		_questionText = _questionBehavior.getQuestion();
+		_correctAnswer = _questionBehavior.getCorrectAnswer();
+		_fakeAnswers = _questionBehavior.getFakeAnswers();
 	}
 
 	public boolean checkAnswer(String answer)
 	{
-		return false;
+		return _correctAnswer.equalsIgnoreCase(answer);
+	}
+	
+	public int getId()
+	{
+		return _id;
+	}
+	
+	public String getQuestionText()
+	{
+		return _questionText;
+	}
+	
+	public String getQuestionType()
+	{
+		if(_fakeAnswers==null)
+			return "short";
+		else if(_fakeAnswers.length==1)
+			return "tf";
+		else
+			return "multi";
+	}
+	
+	public ArrayList<String> getChoices()
+	{
+		if(_fakeAnswers==null)
+			return null;
+		
+		ArrayList<String> choices = new ArrayList<>();
+		
+		choices.add(_correctAnswer);
+		for(String s : _fakeAnswers)
+			choices.add(s);
+		
+		Collections.sort(choices);
+		
+		return choices;
 	}
 }

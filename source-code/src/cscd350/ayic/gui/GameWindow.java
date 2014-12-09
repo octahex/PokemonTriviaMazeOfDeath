@@ -23,7 +23,7 @@ public class GameWindow extends JFrame
 		_maze = m;
 		_tracker = tracker;
 		_mouseListener = new RoomMouseListener(_tracker);
-		QuestionPanel.initialize(_maze);
+		QuestionPanel.initialize(_maze, _tracker);
 		RoomPanel.initialize(_maze, _tracker, new RoomMouseListener(_tracker));
 		MiniMapPanel.initialize(_maze, _tracker);
 		initialize();

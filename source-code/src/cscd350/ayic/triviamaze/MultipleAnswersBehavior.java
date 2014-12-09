@@ -3,16 +3,17 @@ package cscd350.ayic.triviamaze;
 import java.util.Random;
 
 import cscd350.ayic.utility.DataBase;
+import cscd350.ayic.utility.SimpleDB;
 
 public class MultipleAnswersBehavior implements QuestionBehavior
 {
 
-	private DataBase _db;
+	private SimpleDB _db;
 	private int _id;
 	
-	public MultipleAnswersBehavior(DataBase db, int id)
+	public MultipleAnswersBehavior(int id)
 	{
-		_db = db;
+		_db = SimpleDB.getInstance();
 		_id = id;
 	}
 
