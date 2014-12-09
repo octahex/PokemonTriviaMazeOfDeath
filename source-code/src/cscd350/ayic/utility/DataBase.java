@@ -13,7 +13,11 @@ public class DataBase
 	
 	public DataBase()
 	{
-		
+		try {
+			this.connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void connect() throws SQLException
