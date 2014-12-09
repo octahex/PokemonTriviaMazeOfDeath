@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Scanner;
 
-public class dataBase
+public class DataBase
 {
 	private Connection conn = null;
 	private Statement stmt = null;
 	private ResultSet rs = null;
 	
-	public dataBase()
+	public DataBase()
 	{
 		
 	}
@@ -213,7 +213,7 @@ public class dataBase
 	}
 	
 	
-	public String retriveQ(int id) throws SQLException
+	public String retrieveQ(int id) throws SQLException
 	{
 		String type;
 		String q;
@@ -239,7 +239,7 @@ public class dataBase
 	}
 	
 	
-	public String retriveType(int id) throws SQLException
+	public String retrieveType(int id) throws SQLException
 	{
 		String type;
 		
@@ -256,7 +256,7 @@ public class dataBase
 	}
 	
 	
-	public int retriveAID(int id) throws SQLException
+	public int retrieveAID(int id) throws SQLException
 	{
 		int aID;
 		
@@ -273,7 +273,7 @@ public class dataBase
 	}
 	
 	
-	public String retriveA(int id) throws SQLException
+	public String retrieveA(int id) throws SQLException
 	{
 		String a;
 		int aID;
