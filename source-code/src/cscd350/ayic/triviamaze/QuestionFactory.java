@@ -1,11 +1,26 @@
 package cscd350.ayic.triviamaze;
 import java.sql.SQLException;
+import java.util.Random;
 
 import cscd350.ayic.utility.DataBase;
 public class QuestionFactory {
-	private DataBase db = new DataBase();
+	private DataBase db;
+	private Random gen;
 	private int nextQuestion = 1;
 	final int QUESTIONS = 5;		// TODO: Change to be based on how many questions are actually in the DB
+	
+	public QuestionFactory()
+	{
+		db = new DataBase();
+		gen = new Random();
+	}
+	
+	public Question getTrueFalseQuestion()
+	{
+		int randomID = gen.nextInt(151)+1;
+		
+		return null;
+	}
 	
 	public Question newQuestion()	// What will be called outside of this class. Returns a new, random question
 	{

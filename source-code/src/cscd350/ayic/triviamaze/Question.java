@@ -1,27 +1,30 @@
 package cscd350.ayic.triviamaze;
 
-public abstract class Question {
-	private String questionText;
-	private String answer;
-	public String getAnswer()
+import java.util.Random;
+
+public abstract class Question
+{
+	private Random _gen;
+	private QuestionBehavior _questionBehavior;
+	
+	public Question(QuestionBehavior qb)
 	{
-		return this.answer;
-	}
-	public String getQuestionText()
-	{
-		return this.questionText;
-	}
-	public void setAnswer(String newAnswer)
-	{
-		this.answer = newAnswer;
-	}
-	public void setQuestionText(String newQuestionText)
-	{
-		this.questionText = newQuestionText;
-	}
-	public boolean verifyAnswer(String checkAnswer) {
-		checkAnswer = checkAnswer.toLowerCase();
-		return this.getAnswer().equals(checkAnswer);
+		setBehavior(qb);
 	}
 	
+	public void setBehavior(QuestionBehavior qb)
+	{
+		_questionBehavior = qb;
+		init();
+	}
+	
+	private void init()
+	{
+		
+	}
+
+	public boolean checkAnswer(String answer)
+	{
+		return false;
+	}
 }
