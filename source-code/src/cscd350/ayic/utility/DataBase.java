@@ -94,7 +94,6 @@ public class DataBase
 		{
 			sql = "CREATE TABLE ANSWERS " +
 					"(Answer_ID		INT PRIMARY KEY		NOT NULL, " +
-					"Question_ID	INT 				NOT NULL, " +
 					"Answer 		TEXT				NOT NULL)";
 		}
 		if(s.compareTo("HS")==0)
@@ -108,8 +107,7 @@ public class DataBase
 		{
 			sql = "CREATE TABLE SAVES " +
 					"(Save_ID		INT PRIMARY KEY		NOT NULL, " +
-					"Address		TEXT 				NOT NULL, " +
-					"Answer 		char(10))";
+					"Address		TEXT 				NOT NULL,)";
 		}
 		
 		this.stmt.executeUpdate(sql);
@@ -177,7 +175,6 @@ public class DataBase
 	public void fillAnswer() throws SQLException
 	{
 		Scanner myfile = new Scanner (System.in);
-		int qID;
 		int aID;
 		String s;
 		String sql;
@@ -193,24 +190,45 @@ public class DataBase
 		
 		while(myfile.hasNextLine())
 		{
-			qID = myfile.nextInt();
 			aID = myfile.nextInt();
 			s = myfile.nextLine();
 			
 			this.stmt = this.conn.createStatement();
 			
-			sql = "INSERT INTO QUESTIONS (Answer_ID, Question_ID, Type) "+
-					"VALUES("+aID+", "+qID+", "+s+" );";
+			sql = "INSERT INTO QUESTIONS (Answer_ID, Type) "+
+					"VALUES("+aID+", "+s+" );";
 			this.stmt.executeUpdate(sql);
 		}
 		this.stmt.close();
 	}
 	
 	
-	public void delete(int id) throws SQLException
+	public void save(int id, String save) throws SQLException
+	{
+		String sql;
+		this.stmt = this.conn.createStatement();
+		sql = "INSERT INTO SAVES (SAVE_ID, Address) "+
+				"VALUES("+id+", "+save+");";
+		this.stmt.executeUpdate(sql);
+		
+		this.stmt.close();
+	}
+	
+	
+	public void deleteA(int id) throws SQLException
 	{
 		this.stmt = this.conn.createStatement();
-	    String sql = "DELETE from COMPANY where ID="+id+";";
+	    String sql = "DELETE from ANSWERS where ID="+id+";";
+	    this.stmt.executeUpdate(sql);
+
+	    this.stmt.close();
+	}
+	
+	
+	public void deleteS(int id) throws SQLException
+	{
+		this.stmt = this.conn.createStatement();
+	    String sql = "DELETE from SAVES where ID="+id+";";
 	    this.stmt.executeUpdate(sql);
 
 	    this.stmt.close();
@@ -300,5 +318,21 @@ public class DataBase
 		a = rs.getString("Answer");
 		
 		return a;
+	}
+	
+	public String retrieveSave(int id) throws SQLException
+	{
+		String  save;
+		
+		this.stmt = this.conn.createStatement();
+		this.rs = this.stmt.executeQuery("SELECT * FROM SAVES;");
+		
+		while(rs.getInt("Save_ID") != id)
+		{
+			rs.next();
+		}
+		save = rs.getString("Address");
+		
+		return save;
 	}
 }
