@@ -439,6 +439,7 @@ public class DataBase
 		return q;
 	}
 
+	
 	public String retrieveType(int id)
 	{
 		String type = null;
