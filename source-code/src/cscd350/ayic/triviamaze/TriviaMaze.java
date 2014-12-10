@@ -19,7 +19,7 @@ public class TriviaMaze
 			public void run()
 			{
 				Maze maze = new Maze();
-				LocationTracker tracker = new LocationTracker(maze, 0, 0);
+				Tracker tracker = new Tracker(maze, 0, 0);
 				GameWindow game = new GameWindow(maze, tracker);
 				game.setVisible(true);
 			}

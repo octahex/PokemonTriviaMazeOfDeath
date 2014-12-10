@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import cscd350.ayic.utility.ImageUtil;
 import cscd350.ayic.triviamaze.Cell.RoomState;
-import cscd350.ayic.triviamaze.LocationTracker;
+import cscd350.ayic.triviamaze.Tracker;
 import cscd350.ayic.triviamaze.Maze;
 import cscd350.ayic.triviamaze.Room;
 import net.miginfocom.swing.MigLayout;
@@ -23,7 +23,7 @@ public class QuestionPanel extends JPanel implements ActionListener
 {
 	public static QuestionPanel instance = null;
 	private Maze _maze;
-	private LocationTracker _tracker;
+	private Tracker _tracker;
 	private Room _room;
 	private JLabel _question;
 	private JRadioButton _choiceA;
@@ -34,7 +34,7 @@ public class QuestionPanel extends JPanel implements ActionListener
 	private JButton _submit;
 	private JTextField _answer;
 
-	public static void initialize(Maze maze, LocationTracker tracker)
+	public static void initialize(Maze maze, Tracker tracker)
 	{
 		instance = new QuestionPanel(maze, tracker);
 	}
@@ -44,7 +44,7 @@ public class QuestionPanel extends JPanel implements ActionListener
 		return instance;
 	}
 
-	private QuestionPanel(Maze maze, LocationTracker tracker)
+	private QuestionPanel(Maze maze, Tracker tracker)
 	{
 		_maze = maze;
 		_tracker = tracker;
@@ -170,6 +170,11 @@ public class QuestionPanel extends JPanel implements ActionListener
 		
 		_tracker.move(_room.getX(), _room.getY());
 		_tracker.checkGameOver();
+		reset();
+	}
+
+	public void reset()
+	{
 		_question.setVisible(false);
 		_choiceA.setVisible(false);
 		_choiceB.setVisible(false);

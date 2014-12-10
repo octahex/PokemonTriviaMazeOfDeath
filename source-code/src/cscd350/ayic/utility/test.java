@@ -5,11 +5,11 @@ public class test
 
 	public static void main(String[] args)
 	{
-		DataBase db = new DataBase();
+		DataBase db = DataBase.getInstance();
 		
-		int num = 1;
+		int num = 2;
 		
-		String pokemon = db.retrieveA(num);
+		String pokemon = db.retrieveSave(num);
 		
 		System.out.println(pokemon);
 

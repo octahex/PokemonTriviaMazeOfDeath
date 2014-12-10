@@ -2,27 +2,35 @@ package cscd350.ayic.triviamaze;
 
 import java.awt.Point;
 
+import cscd350.ayic.utility.DataBase;
+
 public class SavedInstance
-{
-	private Point location;
-	private int[][] _cells;
+{	
+	private String _name;
+	private String _code;
 	
-	public SavedInstance(String code)
-	{
-		_cells = new int[Maze.MAZESIZE][Maze.MAZESIZE];
-		load(code);
+	public SavedInstance()
+	{		
 	}
 	
-	private void load(String code)
+	public SavedInstance(int id)
 	{
-		for(int i=0; i<_cells.length; i++)
-		{
-			for(int j=0; j<_cells[0].length; j++)
-			{
-				_cells[i][j] = code.charAt(i*Maze.MAZESIZE+j);
-			}
-		}
-
-		location = new Point(code.charAt(Maze.MAZESIZE*Maze.MAZESIZE), code.charAt(Maze.MAZESIZE*Maze.MAZESIZE+1));
+		load(id);
+	}
+	
+	public SavedInstance(String name, String code)
+	{
+		_name = name;
+		_code = code;
+	}
+	
+	public void save()
+	{
+		DataBase.getInstance().save(_name, _code);
+	}
+	
+	private void load(int id)
+	{
+		_code = DataBase.getInstance().retrieveSave(id);
 	}
 }

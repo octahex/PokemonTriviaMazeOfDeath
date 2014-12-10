@@ -3,12 +3,12 @@ package cscd350.ayic.gui;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import cscd350.ayic.triviamaze.LocationTracker;
+import cscd350.ayic.triviamaze.Tracker;
 
 public class RoomMouseListener implements MouseListener
 {
-	protected LocationTracker _tracker;
-	public RoomMouseListener(LocationTracker tracker)
+	protected Tracker _tracker;
+	public RoomMouseListener(Tracker tracker)
 	{
 		_tracker = tracker;
 	}
