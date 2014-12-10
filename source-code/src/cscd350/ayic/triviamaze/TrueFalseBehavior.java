@@ -20,6 +20,7 @@ public class TrueFalseBehavior implements QuestionBehavior
 	@Override
 	public String getQuestion()
 	{
+		int i;
 		Random r = new Random();
 		int falseId = r.nextInt(151);
 		_bluffing = r.nextBoolean();
