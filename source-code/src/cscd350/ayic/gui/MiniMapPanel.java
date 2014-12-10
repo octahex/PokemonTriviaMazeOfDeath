@@ -14,8 +14,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import cscd350.ayic.triviamaze.Cell.RoomState;
-import cscd350.ayic.triviamaze.LocationTracker;
 import cscd350.ayic.triviamaze.Maze;
+import cscd350.ayic.triviamaze.Tracker;
 
 public class MiniMapPanel extends JPanel
 {
@@ -25,12 +25,14 @@ public class MiniMapPanel extends JPanel
 	private Color _unlockedRoomColor;
 	private Color _sealedRoomColor;
 	private BufferedImage _hereImage;
+	private BufferedImage _finishImage;
 	private TexturePaint _hereTexture;
+	private TexturePaint _finishTexture;
 	private Maze _maze;
-	private LocationTracker _tracker;
+	private Tracker _tracker;
 	private int _size;
 	
-	public static void initialize(Maze maze, LocationTracker tracker)
+	public static void initialize(Maze maze, Tracker tracker)
 	{
 		instance = new MiniMapPanel(maze, tracker);
 	}
@@ -40,7 +42,7 @@ public class MiniMapPanel extends JPanel
 		return instance;
 	}
 	
-	private MiniMapPanel(Maze maze, LocationTracker tracker)
+	private MiniMapPanel(Maze maze, Tracker tracker)
 	{
 		_maze = maze;
 		_tracker = tracker;
@@ -53,6 +55,7 @@ public class MiniMapPanel extends JPanel
 		try
 		{
 			_hereImage = ImageIO.read(new File("textures/here.png"));
+			_finishImage = ImageIO.read(new File("textures/finish.png"));
 		}
 		catch (IOException e)
 		{
@@ -60,6 +63,7 @@ public class MiniMapPanel extends JPanel
 		}
 		
 		_hereTexture = new TexturePaint(_hereImage, new Rectangle(0, 0, 50, 50));
+		_finishTexture = new TexturePaint(_finishImage, new Rectangle(0, 0, 50, 50));
 	}
 	
 	private void doDrawing(Graphics g)
@@ -85,6 +89,8 @@ public class MiniMapPanel extends JPanel
 		
 		g2d.setPaint(_hereTexture);
 		g2d.fillRect(50*_tracker.getX(), 50*_tracker.getY(), 50, 50);
+		g2d.setPaint(_finishTexture);
+		g2d.fillRect(50*(Maze.MAZESIZE-1), 50*(Maze.MAZESIZE-1), 50, 50);
 	}
 	
 	@Override

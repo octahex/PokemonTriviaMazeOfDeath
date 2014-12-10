@@ -5,13 +5,22 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Scanner;
 
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
+
 public class DataBase
 {
+	private static DataBase instance = new DataBase();
 	private Connection conn = null;
 	private Statement stmt = null;
 	private ResultSet rs = null;
 
-	public DataBase()
+	public static DataBase getInstance()
+	{
+		return instance;
+	}
+	
+	private DataBase()
 	{
 		connect();
 	}
@@ -63,13 +72,14 @@ public class DataBase
 				sql = "CREATE TABLE ANSWERS "
 						+ "(Answer_ID	INT PRIMARY KEY		NOT NULL, "
 						+ "Answer 		VARCHAR				NOT NULL,"
-						+ "Image 		VARCHAR);";
+						+ "Enabled 		INT);";
 				this.stmt.executeUpdate(sql);
 			}
 			if (s.compareTo("Save") == 0)
 			{
 				sql = "CREATE TABLE SAVES "
-						+ "(Save_ID		INT PRIMARY KEY		NOT NULL, "
+						+ "(Save_ID		INTEGER PRIMARY KEY, "
+						+ "Name		VARCHAR NOT NULL, "
 						+ "Address		VARCHAR				NOT NULL);";
 				this.stmt.executeUpdate(sql);
 			}
@@ -117,13 +127,13 @@ public class DataBase
 		}
 	}
 
-	public void save(int id, String save)
+	public void save(String name, String save)
 	{
 		String sql;
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			sql = "INSERT INTO SAVES (Save_ID, Save) " + "VALUES(" + id + ", '" + save.replace("'", "") + "' );";
+			sql = "INSERT INTO SAVES (Name, Address) " + "VALUES('" + name.replace("'", "") + "', '" + save + "' );";
 			this.stmt.executeUpdate(sql);
 		}
 		catch (SQLException e)
@@ -212,5 +222,30 @@ public class DataBase
 		}
 
 		return save;
+	}
+
+	public DefaultListModel<String> retrieveSaves()
+	{
+		int id;
+		String save = null;
+		DefaultListModel<String> saves = new DefaultListModel<String>();
+
+		try
+		{
+			this.stmt = this.conn.createStatement();
+			this.rs = this.stmt.executeQuery("SELECT * FROM SAVES;");
+			while(rs.next())
+			{
+				id = rs.getInt("Save_ID");
+				save = rs.getString("name");
+				saves.addElement(id+" - "+save);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return saves;
 	}
 }

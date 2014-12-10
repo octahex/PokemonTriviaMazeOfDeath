@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import cscd350.ayic.triviamaze.LocationTracker;
+import cscd350.ayic.triviamaze.Tracker;
 import cscd350.ayic.triviamaze.Maze;
 import cscd350.ayic.triviamaze.Cell.RoomState;
 
@@ -48,9 +48,9 @@ public class RoomPanel extends JPanel
 	
 	private RoomMouseListener _mouseListener;
 	private Maze _maze;
-	private LocationTracker _tracker;
+	private Tracker _tracker;
 	
-	public static void initialize(Maze maze, LocationTracker tracker, RoomMouseListener mouseListener)
+	public static void initialize(Maze maze, Tracker tracker, RoomMouseListener mouseListener)
 	{
 		instance = new RoomPanel(maze, tracker, mouseListener);
 	}
@@ -60,7 +60,7 @@ public class RoomPanel extends JPanel
 		return instance;
 	}
 	
-	protected RoomPanel(Maze maze, LocationTracker tracker, RoomMouseListener mouseListener)
+	protected RoomPanel(Maze maze, Tracker tracker, RoomMouseListener mouseListener)
 	{
 		_maze = maze;
 		_tracker = tracker;
