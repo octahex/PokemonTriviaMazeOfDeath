@@ -1,5 +1,7 @@
 package cscd350.ayic.triviamaze;
 
+import java.util.Random;
+
 import cscd350.ayic.utility.DataBase;
 import cscd350.ayic.utility.SimpleDB;
 
@@ -18,7 +20,17 @@ public class TrueFalseBehavior implements QuestionBehavior
 	@Override
 	public String getQuestion()
 	{
-		return "Is this "+_db.retrieveA(_id)+"?";
+		Random r = new Random();
+		int falseId = r.nextInt(151);
+		_bluffing = r.nextBoolean();
+		if(_bluffing == false)
+		{
+			return "Is this "+_db.retrieveA(_id)+"?";
+		}
+		else
+		{
+			return "Is this "+_db.retrieveA(falseId)+"?";
+		}
 	}
 
 	@Override
