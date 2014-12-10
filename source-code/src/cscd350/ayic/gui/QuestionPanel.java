@@ -134,6 +134,8 @@ public class QuestionPanel extends JPanel implements ActionListener
 			_submit.setVisible(true);
 			_answer.setVisible(false);
 		}
+		
+		System.out.println("The correct answer is: "+ _room.getQuestion().getCorrectAnswer());
 	}
 
 	@Override
@@ -155,14 +157,16 @@ public class QuestionPanel extends JPanel implements ActionListener
 				answer = _choiceD.getText();
 		}
 		
-		System.out.println("You've chosen "+answer);
-		
 		boolean check = _room.getQuestion().checkAnswer(answer);
 		
 		if(check)
+		{
 			_room.setState(RoomState.UNLOCKED);
+		}
 		else
+		{
 			_room.setState(RoomState.SEALED);
+		}
 		
 		_tracker.move(_room.getX(), _room.getY());
 		_question.setVisible(false);

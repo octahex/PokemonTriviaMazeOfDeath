@@ -17,7 +17,6 @@ public class TriviaMaze {
 			public void run()
 			{
 				Maze maze = new Maze();
-				maze.getCell(0, 0).setState(RoomState.UNLOCKED);
 				LocationTracker tracker = new LocationTracker(maze, 0, 0);
 				GameWindow game = new GameWindow(maze, tracker);
 				game.setVisible(true);

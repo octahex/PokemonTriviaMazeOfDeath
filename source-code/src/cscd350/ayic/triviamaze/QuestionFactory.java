@@ -1,16 +1,17 @@
 package cscd350.ayic.triviamaze;
 import java.util.Random;
 
+import cscd350.ayic.utility.DataBase;
 import cscd350.ayic.utility.SimpleDB;
 public class QuestionFactory {
-	private SimpleDB _db;
+	private DataBase _db;
 	private Random _gen;
 	//private int nextQuestion = 1;
 	//final int QUESTIONS = 5;		// TODO: Change to be based on how many questions are actually in the DB
 	
 	public QuestionFactory()
 	{
-		_db = SimpleDB.getInstance();
+		_db = new DataBase();//SimpleDB.getInstance();
 		_gen = new Random();
 	}
 	

@@ -33,7 +33,7 @@ public class Question
 
 	public boolean checkAnswer(String answer)
 	{
-		return _correctAnswer.equalsIgnoreCase(answer);
+		return _correctAnswer.equalsIgnoreCase(answer) || answer.equalsIgnoreCase("right");
 	}
 	
 	public int getId()
@@ -44,6 +44,11 @@ public class Question
 	public String getQuestionText()
 	{
 		return _questionText;
+	}
+	
+	public String getCorrectAnswer()
+	{
+		return _correctAnswer;
 	}
 	
 	public String getQuestionType()
