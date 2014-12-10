@@ -46,186 +46,40 @@ public class DataBase
 
 	public void creatDB()
 	{
-		createTable("Question");
-		createTable("MC");
-		createTable("TF");
-		createTable("SA");
 		createTable("Answer");
-		createTable("HS");
 		createTable("Save");
-		// fillQuestion();
 		fillAnswer();
 	}
 
 	public void createTable(String s)
 	{
 		String sql = null;
-		try
-		{
-			this.stmt = this.conn.createStatement();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
 
 		try
 		{
-			if (s.compareTo("Question") == 0)
-			{
-				sql = "CREATE TABLE QUESTIONS "
-						+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
-						+ "Answer_ID		INT 				NOT NULL, "
-						+ "Type 			TEXT				NOT NULL);";
-				this.stmt.executeUpdate(sql);
-			}
-			if (s.compareTo("MC") == 0)
-			{
-				sql = "CREATE TABLE MULTIPLECHOICE "
-						+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
-						+ "Question		TEXT 				NOT NULL);";
-				this.stmt.executeUpdate(sql);
-			}
-			if (s.compareTo("TF") == 0)
-			{
-				sql = "CREATE TABLE TRUEFALSE "
-						+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
-						+ "Question		TEXT 				NOT NULL);";
-				this.stmt.executeUpdate(sql);
-			}
-			if (s.compareTo("SA") == 0)
-			{
-				sql = "CREATE TABLE SHORTANSWER "
-						+ "(Question_ID	INT PRIMARY KEY		NOT NULL, "
-						+ "Question		TEXT 				NOT NULL);";
-				this.stmt.executeUpdate(sql);
-			}
+			this.stmt = this.conn.createStatement();
+			
 			if (s.compareTo("Answer") == 0)
 			{
 				sql = "CREATE TABLE ANSWERS "
-						+ "(Answer_ID		INT PRIMARY KEY		NOT NULL, "
-						+ "Answer 		TEXT				NOT NULL);";
-				this.stmt.executeUpdate(sql);
-			}
-			if (s.compareTo("HS") == 0)
-			{
-				sql = "CREATE TABLE HIGHSCORES "
-						+ "(HighScore_ID	INT PRIMARY KEY		NOT NULL, "
-						+ "HighScore		INT 				NOT NULL, "
-						+ "NAME 			TEXT				NOT NULL);";
+						+ "(Answer_ID	INT PRIMARY KEY		NOT NULL, "
+						+ "Answer 		VARCHAR				NOT NULL,"
+						+ "Image 		VARCHAR				NOT NULL);";
 				this.stmt.executeUpdate(sql);
 			}
 			if (s.compareTo("Save") == 0)
 			{
 				sql = "CREATE TABLE SAVES "
 						+ "(Save_ID		INT PRIMARY KEY		NOT NULL, "
-						+ "Address		TEXT 				NOT NULL);";
+						+ "Address		VARCHAR				NOT NULL);";
 				this.stmt.executeUpdate(sql);
 			}
-			this.stmt.close();
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
 
-	}
-
-	public void fillQuestion()
-	{
-		Scanner myfile = new Scanner(System.in);
-		int qID;
-		int aID;
-		String s;
-		String type;
-		String sql;
-
-		try
-		{
-			myfile = new Scanner(new File("questions.txt"));
-		}
-		catch (IOException e)
-		{
-			System.out.println("Not a File");
-		}
-
-		while (myfile.hasNextLine())
-		{
-			qID = myfile.nextInt();
-			aID = myfile.nextInt();
-			type = myfile.nextLine();
-			s = myfile.nextLine();
-
-			try
-			{
-				this.stmt = this.conn.createStatement();
-			}
-			catch (SQLException e)
-			{
-				e.printStackTrace();
-			}
-
-			sql = "INSERT INTO QUESTIONS (Question_ID, Answer_ID, Type) "
-					+ "VALUES(" + qID + ", " + aID + ", " + type + " );";
-			try
-			{
-				this.stmt.executeUpdate(sql);
-			}
-			catch (SQLException e)
-			{
-				e.printStackTrace();
-			}
-
-			if (type.compareTo("MC") == 0)
-			{
-				sql = "INSERT INTO MULTIPLECHOICE (Question_ID, Question) "
-						+ "VALUES(" + qID + ", " + s + " );";
-				try
-				{
-					this.stmt.executeUpdate(sql);
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-
-			if (type.compareTo("TF") == 0)
-			{
-				sql = "INSERT INTO TRUEFALSE (Question_ID, Question) "
-						+ "VALUES(" + qID + ", " + s + " );";
-				try
-				{
-					this.stmt.executeUpdate(sql);
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-
-			if (type.compareTo("SA") == 0)
-			{
-				sql = "INSERT INTO SHORTANSWER (Question_ID, Question) "
-						+ "VALUES(" + qID + ", " + s + " );";
-				try
-				{
-					this.stmt.executeUpdate(sql);
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-			}
-		}
-		try
-		{
-			this.stmt.close();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
 	}
 
 	public void fillAnswer()
@@ -254,31 +108,13 @@ public class DataBase
 			try
 			{
 				this.stmt = this.conn.createStatement();
-			}
-			catch (SQLException e)
-			{
-				e.printStackTrace();
-			}
-
-			sql = "INSERT INTO ANSWERS (Answer_ID, Answer) " + "VALUES(" + aID
-					+ ", " + s + " );";
-			try
-			{
+				sql = "INSERT INTO ANSWERS (Answer_ID, Answer) " + "VALUES(" + aID + ", " + s + " );";
 				this.stmt.executeUpdate(sql);
 			}
 			catch (SQLException e)
 			{
-				System.err.println(sql);
 				e.printStackTrace();
 			}
-		}
-		try
-		{
-			this.stmt.close();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
 		}
 	}
 
@@ -288,25 +124,8 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		sql = "INSERT INTO SAVES (SAVE_ID, Address) " + "VALUES(" + id + ", "
-				+ save + ");";
-		try
-		{
+			sql = "INSERT INTO SAVES (SAVE_ID, Address) " + "VALUES(" + id + ", "+ save + ");";
 			this.stmt.executeUpdate(sql);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		try
-		{
-			this.stmt.close();
 		}
 		catch (SQLException e)
 		{
@@ -319,24 +138,8 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		String sql = "DELETE from ANSWERS where ID=" + id + ";";
-		try
-		{
+			String sql = "DELETE from ANSWERS where ID=" + id + ";";
 			this.stmt.executeUpdate(sql);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		try
-		{
-			this.stmt.close();
 		}
 		catch (SQLException e)
 		{
@@ -349,212 +152,23 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		String sql = "DELETE from SAVES where ID=" + id + ";";
-		try
-		{
+			String sql = "DELETE from SAVES where ID=" + id + ";";
 			this.stmt.executeUpdate(sql);
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
-
-		try
-		{
-			this.stmt.close();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	public String retrieveQ(int id)
-	{
-		String type = null;
-		String q = null;
-
-		try
-		{
-			this.stmt = this.conn.createStatement();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			this.rs = this.stmt.executeQuery("SELECT * FROM QUESTIONS;");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		try
-		{
-			while (rs.getInt("Question_ID") != id)
-			{
-				rs.next();
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			type = rs.getString("Type");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		try
-		{
-			this.rs = this.stmt.executeQuery("SELECT * FROM " + type + ";");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		try
-		{
-			while (rs.getInt("Question_ID") != id)
-			{
-				rs.next();
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			q = rs.getString("Question");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		return q;
-	}
-
-	public String retrieveType(int id)
-	{
-		String type = null;
-
-		try
-		{
-			this.stmt = this.conn.createStatement();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			this.rs = this.stmt.executeQuery("SELECT * FROM QUESTIONS;");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		try
-		{
-			while (rs.getInt("Question_ID") != id)
-			{
-				rs.next();
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			type = rs.getString("Type");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		return type;
-	}
-
-	public int retrieveAID(int id)
-	{
-		int aID = 0;
-
-		try
-		{
-			this.stmt = this.conn.createStatement();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			this.rs = this.stmt.executeQuery("SELECT * FROM QUESTIONS;");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		try
-		{
-			while (rs.getInt("Question_ID") != id)
-			{
-				rs.next();
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			aID = rs.getInt("Answer_ID");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		return aID;
 	}
 
 	public String retrieveA(int id)
 	{
 		String a = null;
-		int aID = 0;
 
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			/*
-			 * this.rs = this.stmt.executeQuery("SELECT * FROM QUESTIONS;");
-			 * while (rs.getInt("Question_ID") != id) { rs.next(); } aID =
-			 * rs.getInt("Answer_ID");
-			 */
-			this.rs = this.stmt
-					.executeQuery("SELECT * FROM ANSWERS WHERE Answer_ID=" + id
-							+ ";");
-			/*
-			 * while (rs.getInt("Answer_ID") != aID) { rs.next(); }
-			 */
+			this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS WHERE Answer_ID=" + id + ";");
 			a = rs.getString("Answer");
 		}
 		catch (SQLException e)
@@ -564,6 +178,24 @@ public class DataBase
 
 		return a;
 	}
+	
+	public int retrieveAID(String a)
+	{
+		int id = 0;
+
+		try
+		{
+			this.stmt = this.conn.createStatement();
+			this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS WHERE Answer=" + a + ";");
+			a = rs.getString("Answer_ID");
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return id;
+	}
 
 	public String retrieveSave(int id)
 	{
@@ -572,33 +204,7 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
-			this.rs = this.stmt.executeQuery("SELECT * FROM SAVES;");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		try
-		{
-			while (rs.getInt("Save_ID") != id)
-			{
-				rs.next();
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		try
-		{
+			this.rs = this.stmt.executeQuery("SELECT * FROM SAVES WHERE Save_ID="+id+";");
 			save = rs.getString("Address");
 		}
 		catch (SQLException e)
