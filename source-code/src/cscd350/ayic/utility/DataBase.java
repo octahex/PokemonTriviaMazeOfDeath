@@ -30,7 +30,6 @@ public class DataBase
 			Class.forName("org.sqlite.JDBC");
 			this.conn = DriverManager
 					.getConnection("jdbc:sqlite:triviaMaze.db");
-			this.conn.setAutoCommit(false);
 		}
 		catch (Exception e)
 		{
@@ -64,7 +63,7 @@ public class DataBase
 				sql = "CREATE TABLE ANSWERS "
 						+ "(Answer_ID	INT PRIMARY KEY		NOT NULL, "
 						+ "Answer 		VARCHAR				NOT NULL,"
-						+ "Image 		VARCHAR				NOT NULL);";
+						+ "Image 		VARCHAR);";
 				this.stmt.executeUpdate(sql);
 			}
 			if (s.compareTo("Save") == 0)
@@ -108,7 +107,7 @@ public class DataBase
 			try
 			{
 				this.stmt = this.conn.createStatement();
-				sql = "INSERT INTO ANSWERS (Answer_ID, Answer) " + "VALUES(" + aID + ", " + s + " );";
+				sql = "INSERT INTO ANSWERS (Answer_ID, Answer) " + "VALUES(" + aID + ", '" + s.replace("'", "") + "' );";
 				this.stmt.executeUpdate(sql);
 			}
 			catch (SQLException e)
@@ -124,7 +123,7 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			sql = "INSERT INTO SAVES (SAVE_ID, Address) " + "VALUES(" + id + ", "+ save + ");";
+			sql = "INSERT INTO SAVES (Save_ID, Save) " + "VALUES(" + id + ", '" + save.replace("'", "") + "' );";
 			this.stmt.executeUpdate(sql);
 		}
 		catch (SQLException e)
