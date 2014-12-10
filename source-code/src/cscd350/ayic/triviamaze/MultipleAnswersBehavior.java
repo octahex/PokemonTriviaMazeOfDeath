@@ -7,13 +7,12 @@ import cscd350.ayic.utility.SimpleDB;
 
 public class MultipleAnswersBehavior implements QuestionBehavior
 {
-
-	private SimpleDB _db;
+	private DataBase _db;
 	private int _id;
 	
 	public MultipleAnswersBehavior(int id)
 	{
-		_db = SimpleDB.getInstance();
+		_db = DataBase.getInstance();
 		_id = id;
 	}
 
@@ -37,8 +36,7 @@ public class MultipleAnswersBehavior implements QuestionBehavior
 		int temp;
 		for(int i=0; i<3; i++)
 		{
-			temp = gen.nextInt(151)+1;
-			// TODO check for duplicates
+			temp = DataBase.getInstance().randomAID(false);
 			fake[i] = _db.retrieveA(temp);
 		}
 		

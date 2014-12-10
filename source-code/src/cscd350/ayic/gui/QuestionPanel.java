@@ -175,11 +175,16 @@ public class QuestionPanel extends JPanel implements ActionListener
 
 	public void reset()
 	{
+		_answer.setText("");
 		_question.setVisible(false);
 		_choiceA.setVisible(false);
 		_choiceB.setVisible(false);
 		_choiceC.setVisible(false);
 		_choiceD.setVisible(false);
+		_choiceA.setSelected(false);
+		_choiceB.setSelected(false);
+		_choiceC.setSelected(false);
+		_choiceD.setSelected(false);
 		_submit.setVisible(false);
 		_answer.setVisible(false);
 	}

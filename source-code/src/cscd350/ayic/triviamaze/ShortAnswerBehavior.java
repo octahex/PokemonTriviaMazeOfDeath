@@ -1,16 +1,15 @@
 package cscd350.ayic.triviamaze;
 
-import cscd350.ayic.utility.SimpleDB;
+import cscd350.ayic.utility.DataBase;
 
 public class ShortAnswerBehavior implements QuestionBehavior
 {
-	private SimpleDB _db;
+	private DataBase _db;
 	private int _id;
 	
 	public ShortAnswerBehavior(int id)
 	{
-
-		_db = SimpleDB.getInstance();
+		_db = DataBase.getInstance();
 		_id = id;
 	}
 	

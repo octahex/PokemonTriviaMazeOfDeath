@@ -6,12 +6,9 @@ public class test
 	public static void main(String[] args)
 	{
 		DataBase db = DataBase.getInstance();
-		
-		int num = 2;
-		
-		String pokemon = db.retrieveSave(num);
-		
-		System.out.println(pokemon);
+
+		for(int i=0; i<10; i++)
+			System.out.println(db.randomAID(false));
 
 	}
 

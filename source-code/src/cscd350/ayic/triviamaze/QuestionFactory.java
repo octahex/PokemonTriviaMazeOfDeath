@@ -32,7 +32,7 @@ public class QuestionFactory {
 	{
 		QuestionBehavior behavior;
 		Question question;
-		int id = _gen.nextInt(151)+1;
+		int id = DataBase.getInstance().randomAID(true);
 		
 		switch( type.toLowerCase())
 		{

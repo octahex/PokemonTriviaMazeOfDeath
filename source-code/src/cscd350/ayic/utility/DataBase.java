@@ -6,7 +6,6 @@ import java.sql.*;
 import java.util.Scanner;
 
 import javax.swing.DefaultListModel;
-import javax.swing.ListModel;
 
 public class DataBase
 {
@@ -101,12 +100,17 @@ public class DataBase
 		try
 		{
 			myfile = new Scanner(new File("answers.txt"));
+			this.stmt = this.conn.createStatement();
 		}
 		catch (IOException e)
 		{
 			System.out.println("Not a File");
 		}
-
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
 		while (myfile.hasNextLine())
 		{
 			aID = myfile.nextInt();
@@ -116,8 +120,10 @@ public class DataBase
 
 			try
 			{
-				this.stmt = this.conn.createStatement();
-				sql = "INSERT INTO ANSWERS (Answer_ID, Answer) " + "VALUES(" + aID + ", '" + s.replace("'", "") + "' );";
+				if(aID<7)
+					sql = "INSERT INTO ANSWERS (Answer_ID, Answer, Enabled) " + "VALUES(" + aID + ", '" + s.replace("'", "") + "', 1 );";
+				else
+					sql = "INSERT INTO ANSWERS (Answer_ID, Answer, Enabled) " + "VALUES(" + aID + ", '" + s.replace("'", "") + "', 0 );";
 				this.stmt.executeUpdate(sql);
 			}
 			catch (SQLException e)
@@ -188,6 +194,28 @@ public class DataBase
 		return a;
 	}
 	
+	public int randomAID(boolean enabled)
+	{
+		int id = 0;
+		
+		try
+		{
+			this.stmt = this.conn.createStatement();
+			if(enabled)
+				this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS WHERE Enabled=1 ORDER BY RANDOM() LIMIT 1;");
+			else
+				this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS ORDER BY RANDOM() LIMIT 1;");
+			while(rs.next())
+				id = rs.getInt("Answer_ID");
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return id;
+	}
+	
 	public int retrieveAID(String a)
 	{
 		int id = 0;
@@ -247,5 +275,83 @@ public class DataBase
 		}
 
 		return saves;
+	}
+
+	public DefaultListModel<String> getEnabled()
+	{
+		int id;
+		String answer = null;
+		DefaultListModel<String> list = new DefaultListModel<String>();
+
+		try
+		{
+			this.stmt = this.conn.createStatement();
+			this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS WHERE Enabled=1;");
+			while(rs.next())
+			{
+				id = rs.getInt("Answer_ID");
+				answer = rs.getString("Answer");
+				list.addElement(id+" - "+answer);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	public DefaultListModel<String> getDisabled()
+	{
+		int id;
+		String answer = null;
+		DefaultListModel<String> list = new DefaultListModel<String>();
+
+		try
+		{
+			this.stmt = this.conn.createStatement();
+			this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS WHERE Enabled=0;");
+			while(rs.next())
+			{
+				id = rs.getInt("Answer_ID");
+				answer = rs.getString("Answer");
+				list.addElement(id+" - "+answer);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	public void enableAnswer(int id)
+	{
+		try
+		{
+			this.stmt = this.conn.createStatement();
+			String sql = "UPDATE ANSWERS SET Enabled=1 WHERE Answer_ID="+id;
+			stmt.executeUpdate(sql);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void disableAnswer(int id)
+	{
+		try
+		{
+			this.stmt = this.conn.createStatement();
+			String sql = "UPDATE ANSWERS SET Enabled=0 WHERE Answer_ID="+id;
+			stmt.executeUpdate(sql);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
