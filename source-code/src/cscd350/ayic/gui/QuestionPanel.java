@@ -169,6 +169,7 @@ public class QuestionPanel extends JPanel implements ActionListener
 		}
 		
 		_tracker.move(_room.getX(), _room.getY());
+		_tracker.checkGameOver();
 		_question.setVisible(false);
 		_choiceA.setVisible(false);
 		_choiceB.setVisible(false);

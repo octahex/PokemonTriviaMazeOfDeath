@@ -22,6 +22,11 @@ public class Maze
 		maze=new Cell[MAZESIZE][MAZESIZE];
 		generateMaze();
 	}
+	
+	public void load(SavedInstance instance)
+	{
+		
+	}
 
 	private void generateMaze() // TODO: Generate proper maze. Mazier.
 	{

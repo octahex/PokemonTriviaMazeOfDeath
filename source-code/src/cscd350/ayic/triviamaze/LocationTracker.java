@@ -55,24 +55,6 @@ public class LocationTracker
 		if(_maze.checkCell(x, y)==RoomState.UNLOCKED)
 		{
 			_currentLocation.setLocation(x, y);
-			if(x==Maze.MAZESIZE-1&&y==Maze.MAZESIZE-1)
-			{
-				int dialog =  JOptionPane.showConfirmDialog(
-					    null,
-					    "Congratulations, you win!!\n"
-					    + "Would you like to play again?",
-					    "Game Over",
-					    JOptionPane.YES_NO_OPTION);
-				if(dialog == JOptionPane.NO_OPTION)
-					System.exit(0);
-				else
-				{
-					_maze.reset();
-					_currentLocation = new Point(0, 0);
-					MiniMapPanel.getInstance().repaint();
-					RoomPanel.getInstance().repaint();
-				}
-			}
 		}
 		if(_maze.checkCell(x, y)==RoomState.LOCKED)
 		{
@@ -82,5 +64,96 @@ public class LocationTracker
 		
 		MiniMapPanel.getInstance().repaint();
 		RoomPanel.getInstance().repaint();
+	}
+
+	public void checkGameOver()
+	{
+		if(_maze.checkCell(Maze.MAZESIZE-1, Maze.MAZESIZE-1)==RoomState.SEALED
+				|| !checkPaths())
+			youLose();
+		
+		if(_currentLocation.x==Maze.MAZESIZE-1&&_currentLocation.y==Maze.MAZESIZE-1)
+		{
+			youWin();
+		}
+	}
+
+	private void youWin()
+	{
+		int dialog =  JOptionPane.showConfirmDialog(
+			    null,
+			    "Congratulations, you win!!\n"
+			    + "Would you like to play again?",
+			    "Game Over",
+			    JOptionPane.YES_NO_OPTION);
+		if(dialog == JOptionPane.NO_OPTION)
+			System.exit(0);
+		else
+			reset();
+	}
+
+	private void youLose()
+	{
+		int dialog =  JOptionPane.showConfirmDialog(
+			    null,
+			    "Uh Oh! You lose!!\n"
+			    + "Would you like to play again?",
+			    "Game Over",
+			    JOptionPane.YES_NO_OPTION);
+		if(dialog == JOptionPane.NO_OPTION)
+			System.exit(0);
+		else
+			reset();
+	}
+
+	private void reset()
+	{
+		_maze.reset();
+		_currentLocation = new Point(0, 0);
+		MiniMapPanel.getInstance().repaint();
+		RoomPanel.getInstance().repaint();
+	}
+
+	private boolean checkPaths()
+	{
+		int[][] maze = getIntMaze();
+		return checkPath(maze, _currentLocation.x, _currentLocation.y);
+	}
+
+	private boolean checkPath(int[][] maze, int x, int y)
+	{
+		if(!_maze.inBounds(x, y)||maze[y][x]==0)
+			return false;
+		
+		if(x==Maze.MAZESIZE-1&&y==Maze.MAZESIZE-1)
+			return true;
+		
+		maze[y][x] = 0;
+		
+		return checkPath(maze, x+1, y)
+				|| checkPath(maze, x-1, y)
+				|| checkPath(maze, x, y+1)
+				|| checkPath(maze, x, y-1);
+	}
+
+	private int[][] getIntMaze()
+	{
+		int[][] maze = new int[Maze.MAZESIZE][Maze.MAZESIZE];
+		
+		for(int y=0; y<Maze.MAZESIZE; y++)
+			for(int x=0; x<Maze.MAZESIZE; x++)
+				switch(_maze.checkCell(x, y))
+				{
+				case UNLOCKED:
+					maze[y][x]=1;
+					break;
+				case LOCKED:
+					maze[y][x]=1;
+					break;
+				case SEALED:
+					maze[y][x]=0;
+				}
+				
+		return maze;
 	}
 }
