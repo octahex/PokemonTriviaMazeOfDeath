@@ -7,7 +7,7 @@ import cscd350.ayic.utility.SimpleDB;
 
 public class TrueFalseBehavior implements QuestionBehavior
 {
-	private SimpleDB _db;
+	private SimpleDB _db; 
 	private int _id;
 	private boolean _bluffing;
 	
