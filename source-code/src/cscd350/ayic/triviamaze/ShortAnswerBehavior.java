@@ -6,13 +6,13 @@ public class ShortAnswerBehavior implements QuestionBehavior
 {
 	private DataBase _db;
 	private int _id;
-	
+
 	public ShortAnswerBehavior(int id)
 	{
 		_db = DataBase.getInstance();
 		_id = id;
 	}
-	
+
 	@Override
 	public String getQuestion()
 	{

@@ -188,12 +188,14 @@ public class Tracker
 	{
 		String code = DataBase.getInstance().retrieveSave(id);
 		reset();
-		_currentLocation.setLocation(code.charAt(Maze.MAZESIZE*Maze.MAZESIZE)-'0', code.charAt(Maze.MAZESIZE*Maze.MAZESIZE+1)-'0');
-		for(int r=0; r<Maze.MAZESIZE; r++)
-			for(int c=0; c<Maze.MAZESIZE; c++)
+		_currentLocation.setLocation(
+				code.charAt(Maze.MAZESIZE * Maze.MAZESIZE) - '0',
+				code.charAt(Maze.MAZESIZE * Maze.MAZESIZE + 1) - '0');
+		for (int r = 0; r < Maze.MAZESIZE; r++)
+			for (int c = 0; c < Maze.MAZESIZE; c++)
 			{
-				int num = code.charAt(r*Maze.MAZESIZE+c)-'0';
-				switch(num)
+				int num = code.charAt(r * Maze.MAZESIZE + c) - '0';
+				switch (num)
 				{
 				case 0:
 					_maze.getCell(c, r).setState(RoomState.UNLOCKED);

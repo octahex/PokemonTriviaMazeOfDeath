@@ -113,7 +113,7 @@ public class AdminTool extends JFrame
 				_all.setModel(DataBase.getInstance().getDisabled());
 			}
 		});
-		
+
 		contentPane.add(_disabledLabel);
 		contentPane.add(_enabledLabel, "wrap");
 		contentPane.add(left);

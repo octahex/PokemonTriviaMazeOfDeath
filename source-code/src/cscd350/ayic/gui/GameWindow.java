@@ -74,8 +74,8 @@ public class GameWindow extends JFrame implements KeyListener
 	private void createMenuBar()
 	{
 		setJMenuBar(_menuBar);
-		
-		// file 
+
+		// file
 		JMenu file = new JMenu("File");
 		JMenuItem newItem = new JMenuItem("New");
 		JMenuItem loadItem = new JMenuItem("Load");
@@ -86,14 +86,14 @@ public class GameWindow extends JFrame implements KeyListener
 		file.add(saveItem);
 		file.add(new JSeparator());
 		file.add(exitItem);
-		
-		//help
+
+		// help
 		JMenu help = new JMenu("?");
 		JMenuItem aboutItem = new JMenuItem("About");
 		JMenuItem helpItem = new JMenuItem("Help");
 		help.add(aboutItem);
 		help.add(helpItem);
-		
+
 		_menuBar.add(file);
 		_menuBar.add(help);
 
@@ -120,14 +120,15 @@ public class GameWindow extends JFrame implements KeyListener
 		contentPane.add(MiniMapPanel.getInstance(),
 				"cell 1 0 1 2, width 400:400:400, height 400:400:400, center");
 		contentPane.add(QuestionPanel.getInstance(), "cell 0 2 2 1");
-		
+
 		addKeyListener(this);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent ev)
 	{
-		if (ev.isControlDown() && ev.getKeyChar() != 'a' && ev.getKeyCode() == 65)
+		if (ev.isControlDown() && ev.getKeyChar() != 'a'
+				&& ev.getKeyCode() == 65)
 			new AdminTool().setVisible(true);
 	}
 

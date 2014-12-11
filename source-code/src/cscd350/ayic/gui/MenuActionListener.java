@@ -21,8 +21,8 @@ public class MenuActionListener implements ActionListener
 		switch (item.getActionCommand().toLowerCase())
 		{
 		case "new":
-			if (JOptionPane.showConfirmDialog(null, "Start a new game?", "New game",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+			if (JOptionPane.showConfirmDialog(null, "Start a new game?",
+					"New game", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 				_tracker.reset();
 			break;
 		case "load":
@@ -35,10 +35,10 @@ public class MenuActionListener implements ActionListener
 			System.exit(0);
 			break;
 		case "about":
-			
+
 			break;
 		case "help":
-			
+
 			break;
 		}
 	}

@@ -32,7 +32,7 @@ public class RoomPanel extends JPanel
 	private BufferedImage _exitRightImage;
 	private BufferedImage _closedImage;
 	private BufferedImage _grassImage;
-	
+
 	private TexturePaint _brickTexture;
 	private TexturePaint _lockTexture;
 	private TexturePaint _arrowUpTexture;
@@ -45,22 +45,24 @@ public class RoomPanel extends JPanel
 	private TexturePaint _exitRightTexture;
 	private TexturePaint _closedTexture;
 	private TexturePaint _grassTexture;
-	
+
 	private RoomMouseListener _mouseListener;
 	private Maze _maze;
 	private Tracker _tracker;
-	
-	public static void initialize(Maze maze, Tracker tracker, RoomMouseListener mouseListener)
+
+	public static void initialize(Maze maze, Tracker tracker,
+			RoomMouseListener mouseListener)
 	{
 		instance = new RoomPanel(maze, tracker, mouseListener);
 	}
-	
+
 	public static RoomPanel getInstance()
 	{
 		return instance;
 	}
-	
-	protected RoomPanel(Maze maze, Tracker tracker, RoomMouseListener mouseListener)
+
+	protected RoomPanel(Maze maze, Tracker tracker,
+			RoomMouseListener mouseListener)
 	{
 		_maze = maze;
 		_tracker = tracker;
@@ -79,7 +81,8 @@ public class RoomPanel extends JPanel
 			_arrowUpImage = ImageIO.read(new File("textures/arrow-up.png"));
 			_arrowDownImage = ImageIO.read(new File("textures/arrow-down.png"));
 			_arrowLeftImage = ImageIO.read(new File("textures/arrow-left.png"));
-			_arrowRightImage = ImageIO.read(new File("textures/arrow-right.png"));
+			_arrowRightImage = ImageIO
+					.read(new File("textures/arrow-right.png"));
 			_exitUpImage = ImageIO.read(new File("textures/exit-north.png"));
 			_exitDownImage = ImageIO.read(new File("textures/exit-south.png"));
 			_exitLeftImage = ImageIO.read(new File("textures/exit-west.png"));
@@ -87,82 +90,94 @@ public class RoomPanel extends JPanel
 			_closedImage = ImageIO.read(new File("textures/closed.png"));
 			_grassImage = ImageIO.read(new File("textures/grass.png"));
 		}
-		catch(IOException ex)
+		catch (IOException ex)
 		{
-			Logger.getLogger(RoomPanel.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(RoomPanel.class.getName()).log(Level.SEVERE, null,
+					ex);
 		}
 	}
-	
+
 	private void loadTextures()
 	{
-		_brickTexture = new TexturePaint(_brickImage, new Rectangle(0, 0, 64, 64));
+		_brickTexture = new TexturePaint(_brickImage, new Rectangle(0, 0, 64,
+				64));
 		_lockTexture = new TexturePaint(_lockImage, new Rectangle(0, 0, 64, 64));
-		_arrowUpTexture = new TexturePaint(_arrowUpImage, new Rectangle(0, 0, 64, 64));
-		_arrowDownTexture = new TexturePaint(_arrowDownImage, new Rectangle(0, 0, 64, 64));
-		_arrowLeftTexture = new TexturePaint(_arrowLeftImage, new Rectangle(0, 0, 64, 64));
-		_arrowRightTexture = new TexturePaint(_arrowRightImage, new Rectangle(0, 0, 64, 64));
-		_exitUpTexture = new TexturePaint(_exitUpImage, new Rectangle(0, 0, 64, 64));
-		_exitDownTexture = new TexturePaint(_exitDownImage, new Rectangle(0, 0, 64, 64));
-		_exitLeftTexture = new TexturePaint(_exitLeftImage, new Rectangle(0, 0, 64, 64));
-		_exitRightTexture = new TexturePaint(_exitRightImage, new Rectangle(0, 0, 64, 64));
-		_closedTexture = new TexturePaint(_closedImage, new Rectangle(0, 0, 64, 64));
-		_grassTexture = new TexturePaint(_grassImage, new Rectangle(0, 0, 64, 64));
+		_arrowUpTexture = new TexturePaint(_arrowUpImage, new Rectangle(0, 0,
+				64, 64));
+		_arrowDownTexture = new TexturePaint(_arrowDownImage, new Rectangle(0,
+				0, 64, 64));
+		_arrowLeftTexture = new TexturePaint(_arrowLeftImage, new Rectangle(0,
+				0, 64, 64));
+		_arrowRightTexture = new TexturePaint(_arrowRightImage, new Rectangle(
+				0, 0, 64, 64));
+		_exitUpTexture = new TexturePaint(_exitUpImage, new Rectangle(0, 0, 64,
+				64));
+		_exitDownTexture = new TexturePaint(_exitDownImage, new Rectangle(0, 0,
+				64, 64));
+		_exitLeftTexture = new TexturePaint(_exitLeftImage, new Rectangle(0, 0,
+				64, 64));
+		_exitRightTexture = new TexturePaint(_exitRightImage, new Rectangle(0,
+				0, 64, 64));
+		_closedTexture = new TexturePaint(_closedImage, new Rectangle(0, 0, 64,
+				64));
+		_grassTexture = new TexturePaint(_grassImage, new Rectangle(0, 0, 64,
+				64));
 	}
-	
+
 	private void doDrawing(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D) g;
-		
+
 		paintBricks(g2d);
-		
+
 		paintGrass(g2d);
 
 		paintArrows(g2d);
-		
+
 		paintExits(g2d);
-		
+
 		paintDoors(g2d);
 	}
-	
+
 	private void paintDoors(Graphics2D g2d)
 	{
 		int x = _tracker.getX();
 		int y = _tracker.getY();
 
-		paintDoor(g2d, x-1, y, 0, 128);
-		paintDoor(g2d, x+1, y, 256, 128);
-		paintDoor(g2d, x, y-1, 128, 0);
-		paintDoor(g2d, x, y+1, 128, 256);
+		paintDoor(g2d, x - 1, y, 0, 128);
+		paintDoor(g2d, x + 1, y, 256, 128);
+		paintDoor(g2d, x, y - 1, 128, 0);
+		paintDoor(g2d, x, y + 1, 128, 256);
 	}
-	
+
 	private void paintDoor(Graphics2D g2d, int x, int y, int paintX, int paintY)
-	{		
-		if(_maze.checkCell(x, y)==RoomState.LOCKED)
+	{
+		if (_maze.checkCell(x, y) == RoomState.LOCKED)
 		{
 			g2d.setPaint(_lockTexture);
 			g2d.fillRect(paintX, paintY, 64, 64);
 			return;
 		}
-		if(_maze.checkCell(x, y)==RoomState.SEALED)
+		if (_maze.checkCell(x, y) == RoomState.SEALED)
 		{
 			g2d.setPaint(_closedTexture);
 			g2d.fillRect(paintX, paintY, 64, 64);
 			return;
 		}
-		
+
 	}
 
 	private void paintExits(Graphics2D g2d)
 	{
 		g2d.setPaint(_exitUpTexture);
 		g2d.fillRect(128, 0, 64, 64);
-		
+
 		g2d.setPaint(_exitDownTexture);
 		g2d.fillRect(128, 256, 64, 64);
-		
+
 		g2d.setPaint(_exitRightTexture);
 		g2d.fillRect(256, 128, 64, 64);
-		
+
 		g2d.setPaint(_exitLeftTexture);
 		g2d.fillRect(0, 128, 64, 64);
 	}
@@ -171,13 +186,13 @@ public class RoomPanel extends JPanel
 	{
 		g2d.setPaint(_arrowUpTexture);
 		g2d.fillRect(128, 64, 64, 64);
-		
+
 		g2d.setPaint(_arrowDownTexture);
 		g2d.fillRect(128, 192, 64, 64);
-		
+
 		g2d.setPaint(_arrowRightTexture);
 		g2d.fillRect(192, 128, 64, 64);
-		
+
 		g2d.setPaint(_arrowLeftTexture);
 		g2d.fillRect(64, 128, 64, 64);
 	}

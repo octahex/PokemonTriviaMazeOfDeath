@@ -31,7 +31,7 @@ public class Loader extends JFrame
 		_tracker = tracker;
 		_saves = new JList<String>(DataBase.getInstance().retrieveSaves());
 		_load = new JButton("Load");
-		
+
 		setLookAndFeel();
 		initialize();
 	}
@@ -69,18 +69,18 @@ public class Loader extends JFrame
 		setLocationRelativeTo(null);
 		JPanel contentPane = new JPanel(new MigLayout());
 		setContentPane(contentPane);
-		
+
 		_saves.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		_saves.setLayoutOrientation(JList.VERTICAL);
 		_saves.setVisibleRowCount(-1);
 		JScrollPane listScroller = new JScrollPane(_saves);
 		listScroller.setPreferredSize(new Dimension(290, 350));
-		
+
 		_load.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(_saves.isSelectionEmpty())
+				if (_saves.isSelectionEmpty())
 					return;
 				Scanner scan = new Scanner(_saves.getSelectedValue());
 				int id = scan.nextInt();
@@ -88,7 +88,7 @@ public class Loader extends JFrame
 				dispose();
 			}
 		});
-		
+
 		contentPane.add(listScroller, "wrap");
 		contentPane.add(_load);
 	}

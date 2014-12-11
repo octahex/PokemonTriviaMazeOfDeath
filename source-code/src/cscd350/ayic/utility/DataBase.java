@@ -18,7 +18,7 @@ public class DataBase
 	{
 		return instance;
 	}
-	
+
 	private DataBase()
 	{
 		connect();
@@ -65,19 +65,17 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			
+
 			if (s.compareTo("Answer") == 0)
 			{
 				sql = "CREATE TABLE ANSWERS "
 						+ "(Answer_ID	INT PRIMARY KEY		NOT NULL, "
-						+ "Answer 		VARCHAR				NOT NULL,"
-						+ "Enabled 		INT);";
+						+ "Answer 		VARCHAR				NOT NULL," + "Enabled 		INT);";
 				this.stmt.executeUpdate(sql);
 			}
 			if (s.compareTo("Save") == 0)
 			{
-				sql = "CREATE TABLE SAVES "
-						+ "(Save_ID		INTEGER PRIMARY KEY, "
+				sql = "CREATE TABLE SAVES " + "(Save_ID		INTEGER PRIMARY KEY, "
 						+ "Name		VARCHAR NOT NULL, "
 						+ "Address		VARCHAR				NOT NULL);";
 				this.stmt.executeUpdate(sql);
@@ -110,20 +108,25 @@ public class DataBase
 		{
 			e.printStackTrace();
 		}
-		
+
 		while (myfile.hasNextLine())
 		{
 			aID = myfile.nextInt();
 			s = myfile.nextLine();
-			while(s.equalsIgnoreCase("\n")||s.equalsIgnoreCase("")||s.equalsIgnoreCase(" "))
+			while (s.equalsIgnoreCase("\n") || s.equalsIgnoreCase("")
+					|| s.equalsIgnoreCase(" "))
 				s = myfile.nextLine();
 
 			try
 			{
-				if(aID<7)
-					sql = "INSERT INTO ANSWERS (Answer_ID, Answer, Enabled) " + "VALUES(" + aID + ", '" + s.replace("'", "") + "', 1 );";
+				if (aID < 7)
+					sql = "INSERT INTO ANSWERS (Answer_ID, Answer, Enabled) "
+							+ "VALUES(" + aID + ", '" + s.replace("'", "")
+							+ "', 1 );";
 				else
-					sql = "INSERT INTO ANSWERS (Answer_ID, Answer, Enabled) " + "VALUES(" + aID + ", '" + s.replace("'", "") + "', 0 );";
+					sql = "INSERT INTO ANSWERS (Answer_ID, Answer, Enabled) "
+							+ "VALUES(" + aID + ", '" + s.replace("'", "")
+							+ "', 0 );";
 				this.stmt.executeUpdate(sql);
 			}
 			catch (SQLException e)
@@ -139,7 +142,8 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			sql = "INSERT INTO SAVES (Name, Address) " + "VALUES('" + name.replace("'", "") + "', '" + save + "' );";
+			sql = "INSERT INTO SAVES (Name, Address) " + "VALUES('"
+					+ name.replace("'", "") + "', '" + save + "' );";
 			this.stmt.executeUpdate(sql);
 		}
 		catch (SQLException e)
@@ -183,7 +187,9 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS WHERE Answer_ID=" + id + ";");
+			this.rs = this.stmt
+					.executeQuery("SELECT * FROM ANSWERS WHERE Answer_ID=" + id
+							+ ";");
 			a = rs.getString("Answer");
 		}
 		catch (SQLException e)
@@ -193,29 +199,31 @@ public class DataBase
 
 		return a;
 	}
-	
+
 	public int randomAID(boolean enabled)
 	{
 		int id = 0;
-		
+
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			if(enabled)
-				this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS WHERE Enabled=1 ORDER BY RANDOM() LIMIT 1;");
+			if (enabled)
+				this.rs = this.stmt
+						.executeQuery("SELECT * FROM ANSWERS WHERE Enabled=1 ORDER BY RANDOM() LIMIT 1;");
 			else
-				this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS ORDER BY RANDOM() LIMIT 1;");
-			while(rs.next())
+				this.rs = this.stmt
+						.executeQuery("SELECT * FROM ANSWERS ORDER BY RANDOM() LIMIT 1;");
+			while (rs.next())
 				id = rs.getInt("Answer_ID");
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
-		
+
 		return id;
 	}
-	
+
 	public int retrieveAID(String a)
 	{
 		int id = 0;
@@ -223,7 +231,9 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS WHERE Answer=" + a + ";");
+			this.rs = this.stmt
+					.executeQuery("SELECT * FROM ANSWERS WHERE Answer=" + a
+							+ ";");
 			a = rs.getString("Answer_ID");
 		}
 		catch (SQLException e)
@@ -241,7 +251,9 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			this.rs = this.stmt.executeQuery("SELECT * FROM SAVES WHERE Save_ID="+id+";");
+			this.rs = this.stmt
+					.executeQuery("SELECT * FROM SAVES WHERE Save_ID=" + id
+							+ ";");
 			save = rs.getString("Address");
 		}
 		catch (SQLException e)
@@ -262,11 +274,11 @@ public class DataBase
 		{
 			this.stmt = this.conn.createStatement();
 			this.rs = this.stmt.executeQuery("SELECT * FROM SAVES;");
-			while(rs.next())
+			while (rs.next())
 			{
 				id = rs.getInt("Save_ID");
 				save = rs.getString("name");
-				saves.addElement(id+" - "+save);
+				saves.addElement(id + " - " + save);
 			}
 		}
 		catch (SQLException e)
@@ -286,12 +298,13 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS WHERE Enabled=1;");
-			while(rs.next())
+			this.rs = this.stmt
+					.executeQuery("SELECT * FROM ANSWERS WHERE Enabled=1;");
+			while (rs.next())
 			{
 				id = rs.getInt("Answer_ID");
 				answer = rs.getString("Answer");
-				list.addElement(id+" - "+answer);
+				list.addElement(id + " - " + answer);
 			}
 		}
 		catch (SQLException e)
@@ -311,12 +324,13 @@ public class DataBase
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			this.rs = this.stmt.executeQuery("SELECT * FROM ANSWERS WHERE Enabled=0;");
-			while(rs.next())
+			this.rs = this.stmt
+					.executeQuery("SELECT * FROM ANSWERS WHERE Enabled=0;");
+			while (rs.next())
 			{
 				id = rs.getInt("Answer_ID");
 				answer = rs.getString("Answer");
-				list.addElement(id+" - "+answer);
+				list.addElement(id + " - " + answer);
 			}
 		}
 		catch (SQLException e)
@@ -326,13 +340,13 @@ public class DataBase
 
 		return list;
 	}
-	
+
 	public void enableAnswer(int id)
 	{
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			String sql = "UPDATE ANSWERS SET Enabled=1 WHERE Answer_ID="+id;
+			String sql = "UPDATE ANSWERS SET Enabled=1 WHERE Answer_ID=" + id;
 			stmt.executeUpdate(sql);
 		}
 		catch (SQLException e)
@@ -340,13 +354,13 @@ public class DataBase
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void disableAnswer(int id)
 	{
 		try
 		{
 			this.stmt = this.conn.createStatement();
-			String sql = "UPDATE ANSWERS SET Enabled=0 WHERE Answer_ID="+id;
+			String sql = "UPDATE ANSWERS SET Enabled=0 WHERE Answer_ID=" + id;
 			stmt.executeUpdate(sql);
 		}
 		catch (SQLException e)
