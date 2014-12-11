@@ -66,7 +66,7 @@ public class AdminTool extends JFrame
 
 	private void initialize()
 	{
-		setTitle("Load a game");
+		setTitle("Admin tool");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(600, 400);
 		setLocationRelativeTo(null);

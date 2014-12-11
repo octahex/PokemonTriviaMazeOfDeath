@@ -20,13 +20,9 @@ public class ImageUtil
 		{
 			e.printStackTrace();
 		}
-		int rThreshold=150;
-		int gThreshold=150;
-		int bThreshold=150;
+		
 		int x=silhouette.getTileWidth();
 		int y=silhouette.getTileHeight();
-		Color color;
-		int red, green, blue;
 
 		for (int r=0; r<y; r++)
 		{
@@ -34,7 +30,6 @@ public class ImageUtil
 			{
 				int rgba=silhouette.getRGB(c, r);
 				int black=Color.black.getRGB();
-				int white=Color.white.getRGB();
 
 				if ((rgba>>24)!=0x00)
 				{

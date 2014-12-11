@@ -20,7 +20,7 @@ public class TrueFalseBehavior implements QuestionBehavior
 	public String getQuestion()
 	{
 		Random r = new Random();
-		int falseId = r.nextInt(151);
+		int falseId = DataBase.getInstance().randomAID(false);
 		_bluffing = r.nextBoolean();
 		if(_bluffing == false)
 		{
