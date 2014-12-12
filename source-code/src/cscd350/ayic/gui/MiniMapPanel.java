@@ -31,17 +31,17 @@ public class MiniMapPanel extends JPanel
 	private Maze _maze;
 	private Tracker _tracker;
 	private int _size;
-	
+
 	public static void initialize(Maze maze, Tracker tracker)
 	{
 		instance = new MiniMapPanel(maze, tracker);
 	}
-	
+
 	public static MiniMapPanel getInstance()
 	{
 		return instance;
 	}
-	
+
 	private MiniMapPanel(Maze maze, Tracker tracker)
 	{
 		_maze = maze;
@@ -51,7 +51,7 @@ public class MiniMapPanel extends JPanel
 		_lockedRoomColor = Color.gray;
 		_unlockedRoomColor = Color.green;
 		_sealedRoomColor = Color.red;
-		
+
 		try
 		{
 			_hereImage = ImageIO.read(new File("textures/here.png"));
@@ -61,24 +61,25 @@ public class MiniMapPanel extends JPanel
 		{
 			e.printStackTrace();
 		}
-		
+
 		_hereTexture = new TexturePaint(_hereImage, new Rectangle(0, 0, 50, 50));
-		_finishTexture = new TexturePaint(_finishImage, new Rectangle(0, 0, 50, 50));
+		_finishTexture = new TexturePaint(_finishImage, new Rectangle(0, 0, 50,
+				50));
 	}
-	
+
 	private void doDrawing(Graphics g)
 	{
 		Graphics2D g2d = (Graphics2D) g;
-		
+
 		Rectangle2D rect;
-		
-		for(int r=0; r<_size; r++)
-			for(int c=0; c<_size; c++)
+
+		for (int r = 0; r < _size; r++)
+			for (int c = 0; c < _size; c++)
 			{
-				rect = new Rectangle2D.Double(c*50, r*50, 50, 50);
-				if(_maze.checkCell(c, r)==RoomState.UNLOCKED)
+				rect = new Rectangle2D.Double(c * 50, r * 50, 50, 50);
+				if (_maze.checkCell(c, r) == RoomState.UNLOCKED)
 					g2d.setColor(_unlockedRoomColor);
-				else if(_maze.checkCell(c, r)==RoomState.LOCKED)
+				else if (_maze.checkCell(c, r) == RoomState.LOCKED)
 					g2d.setColor(_lockedRoomColor);
 				else
 					g2d.setColor(_sealedRoomColor);
@@ -86,13 +87,13 @@ public class MiniMapPanel extends JPanel
 				g2d.setColor(_borderColor);
 				g2d.draw(rect);
 			}
-		
+
 		g2d.setPaint(_hereTexture);
-		g2d.fillRect(50*_tracker.getX(), 50*_tracker.getY(), 50, 50);
+		g2d.fillRect(50 * _tracker.getX(), 50 * _tracker.getY(), 50, 50);
 		g2d.setPaint(_finishTexture);
-		g2d.fillRect(50*(Maze.MAZESIZE-1), 50*(Maze.MAZESIZE-1), 50, 50);
+		g2d.fillRect(50 * (Maze.MAZESIZE - 1), 50 * (Maze.MAZESIZE - 1), 50, 50);
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g)
 	{

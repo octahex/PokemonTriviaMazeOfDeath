@@ -58,7 +58,7 @@ public class QuestionPanel extends JPanel implements ActionListener
 		_bGroup = new ButtonGroup();
 		_submit = new JButton("Submit");
 		_answer = new JTextField(20);
-		
+
 		_submit.addActionListener(this);
 
 		_bGroup.add(_choiceA);
@@ -134,32 +134,33 @@ public class QuestionPanel extends JPanel implements ActionListener
 			_submit.setVisible(true);
 			_answer.setVisible(false);
 		}
-		
-		System.out.println("The correct answer is: "+ _room.getQuestion().getCorrectAnswer());
+
+		System.out.println("The correct answer is: "
+				+ _room.getQuestion().getCorrectAnswer());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		String answer = "";
-		
-		if(_room.getQuestion().getQuestionType().equals("short"))
+
+		if (_room.getQuestion().getQuestionType().equals("short"))
 			answer = _answer.getText();
 		else
 		{
-			if(_choiceA.isSelected())
+			if (_choiceA.isSelected())
 				answer = _choiceA.getText();
-			else if(_choiceB.isSelected())
+			else if (_choiceB.isSelected())
 				answer = _choiceB.getText();
-			else if(_choiceC.isSelected())
+			else if (_choiceC.isSelected())
 				answer = _choiceC.getText();
 			else
 				answer = _choiceD.getText();
 		}
-		
+
 		boolean check = _room.getQuestion().checkAnswer(answer);
-		
-		if(check)
+
+		if (check)
 		{
 			_room.setState(RoomState.UNLOCKED);
 		}
@@ -167,7 +168,7 @@ public class QuestionPanel extends JPanel implements ActionListener
 		{
 			_room.setState(RoomState.SEALED);
 		}
-		
+
 		_tracker.move(_room.getX(), _room.getY());
 		_tracker.checkGameOver();
 		reset();
@@ -175,11 +176,16 @@ public class QuestionPanel extends JPanel implements ActionListener
 
 	public void reset()
 	{
+		_answer.setText("");
 		_question.setVisible(false);
 		_choiceA.setVisible(false);
 		_choiceB.setVisible(false);
 		_choiceC.setVisible(false);
 		_choiceD.setVisible(false);
+		_choiceA.setSelected(false);
+		_choiceB.setSelected(false);
+		_choiceC.setSelected(false);
+		_choiceD.setSelected(false);
 		_submit.setVisible(false);
 		_answer.setVisible(false);
 	}
